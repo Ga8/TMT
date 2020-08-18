@@ -29,12 +29,16 @@ export default new Vuex.Store({
   },
   actions: {
     async addMeeting(commit, meeting) {
+    
       var response = await axios({
         method: "post",
         url: "/api/addmeeting",
         data: meeting,
-      });
-      return response.data;
+      }).then(  router.push(`/GetEvent/${response.data}`)
+      .catch(router.push(`/GetEvent/error`)));
+     
+      router.go();
+   
     },
     async isvalidRedirect(commit, id) {
       console.log(id);

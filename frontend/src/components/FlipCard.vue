@@ -129,7 +129,7 @@ i.backFlipBtn {
   transform: rotateY(-180deg);
 }
 .container {
-  width: 40%;
+  width: 45%;
   margin: auto;
 }
 
@@ -144,7 +144,7 @@ i.backFlipBtn {
   min-width: 300px;
 }
 .flipper {
-  -moz-transform: perspective(1000px);
+  -moz-transform: perspective(1500px);
   -moz-transform-style: preserve-3d;
   position: relative;
 }

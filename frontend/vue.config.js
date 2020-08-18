@@ -3,17 +3,14 @@ module.exports = {
     devServer: {
         proxy: {
           '/api': {
-            target: 'http://192.168.0.10:9090',
+            target: 'http://localhost:9090',
             changeOrigin: true,
-            pathRewrite: {
-              '^/api': ''
-            },
           }
         }
-      }
-,
-// Change build paths to make them Maven compatible
-// see https://cli.vuejs.org/config/
-outputDir: 'target/dist',
-assetsDir: 'static'
-};
+      },
+   // Change build paths to make them Maven compatible
+   // see https://cli.vuejs.org/config/
+   outputDir: 'target/dist',
+   assetsDir: 'static'
+   };
+ 

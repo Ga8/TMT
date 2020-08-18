@@ -1,34 +1,11 @@
 <template>
+<v-flex>
   <v-container fluid>
     <v-form ref="form" lazy-validation>
+      
+      <TitleVue title="CREATE AN EVENT" />
+     
       <v-row justify="space-around">
-        <v-col sm="12" md="6" class="ma-2">
-          <div align="left" class="picker ma-4">
-            <h2 class=" ma-4 fill">Fill the form to create an event</h2>
-            <h3 class="ma-4">Choose a date for your event (max : 5)</h3>
-            <div v-if="!dateIsChosen" align="center" class="error">
-            <p class="ma-0" >  <v-icon>mdi-alert</v-icon> Choose at least one date  <v-icon>mdi-alert</v-icon> </p>
-            </div>
-            <vc-date-picker
-              mode="multiple"
-              is-expanded
-              v-model="dates"
-              is-inline
-              :available-dates="availableDates"
-              popover-visibility="focus"
-              color="teal"
-              @dayclick="dayClicked"
-              :rules="datesRules"
-              :columns="$screens({ default: 1, lg: 2 })"
-              :rows="$screens({ default: 1, lg: 2 })"
-            >
-              <!-- :attributes="attributes" -->
-            </vc-date-picker>
-               <div v-if="!dateIsChosen" align="center" class="error">
-            <p class="ma-0" >  <v-icon>mdi-alert</v-icon> Choose at least one date  <v-icon>mdi-alert</v-icon> </p>
-            </div>
-          </div>
-        </v-col>
         <v-col sm="12" md="4">
           <div class="ma-3">
             <div align="center">
@@ -78,13 +55,42 @@
             </div>
           </div>
         </v-col>
+        <v-col sm="12" md="6" class="ma-2">
+          <div align="center" class="picker ma-4">
+            
+            <h3 class="ma-4">Choose a date for your event (max : 5)</h3>
+            <div v-if="!dateIsChosen" align="center" class="error">
+            <p class="ma-0" >  <v-icon>mdi-alert</v-icon> Choose at least one date  <v-icon>mdi-alert</v-icon> </p>
+            </div>
+            <vc-date-picker
+              mode="multiple"
+              is-expanded
+              v-model="dates"
+              is-inline
+              :available-dates="availableDates"
+              popover-visibility="focus"
+              color="teal"
+              @dayclick="dayClicked"
+              :rules="datesRules"
+              :columns="$screens({ default: 1, lg: 2 })"
+              :rows="$screens({ default: 1, lg: 2 })"
+              is-dark
+            >
+              <!-- :attributes="attributes" -->
+            </vc-date-picker>
+              <div v-if="!dateIsChosen" align="center" class="error">
+            <p class="ma-0" >  <v-icon>mdi-alert</v-icon> Choose at least one date  <v-icon>mdi-alert</v-icon> </p>
+            </div>
+          </div>
+        </v-col>
       </v-row>
     </v-form>
   </v-container>
+  </v-flex>
 </template>
 <script>
-import { mapActions } from "vuex";
-//mport { mapGetters, mapState } from "vuex";
+import axios from "axios";
+import TitleVue from '../components/Title.vue';
 
 export default {
   data: () => ({
@@ -108,6 +114,9 @@ export default {
     ],
     datesRules: [v => !!v || "dates is required"]
   }),
+  components: {
+		TitleVue
+	},
   computed: {
     // ...mapState(["title"]),
     //   ...mapGetters(["attributes"])
@@ -126,15 +135,13 @@ export default {
     },
     createData: vm => ({
       title: vm.title,
-      name: vm.name,
+      author: vm.name,
       opportunities: vm.selectedDays
     }),
-    ...mapActions(["addMeeting"]),
     async validate() {
       if (this.$refs.form.validate() && this.selectedDays.length != 0) {
-        var response = await this.addMeeting(this.createData(this));
-        console.log(response);
-        this.$router.push(`/GetEvent/${response}`);
+         await this.addMeeting(this.createData(this));
+
       } else {
         this.valid = false;
         this.dateIsChosen = true;
@@ -142,6 +149,17 @@ export default {
           this.dateIsChosen = false;
         }
       }
+    },
+    async addMeeting( meeting) {
+    
+       await axios({
+        method: "post",
+        url: "/api/addmeeting",
+        data: meeting,
+      }).then( response => this.$router.push(`/GetEvent/${response.data}`)
+      .catch(error => {console.log(error ) ; this.$router.push(`/GetEvent/error`)}));
+    
+   
     },
     createOpportunity: day => ({
       date: day.id,
@@ -208,4 +226,5 @@ export default {
   margin-top: 20px;
   margin-left: 5px;
 }
+
 </style>

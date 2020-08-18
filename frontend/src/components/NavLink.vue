@@ -3,21 +3,50 @@
   <v-app id="inspire">
     <v-navigation-drawer v-model="navmenuopen" app clipped>
       <v-list dense>
-        <v-list-item link v-for="item in items" :key="item.title" :to="item.path">
+        <v-list-item>
+            <v-list-item-action>
+              <v-icon>mdi-home-city</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+                <a>
+                  <router-link tag="span" :to="{name: 'home'}">Home</router-link>
+                </a>
+            </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon>mdi-calendar</v-icon>
           </v-list-item-action>
-          <v-list-item-content>{{ item.title }}</v-list-item-content>
+          <v-list-item-content>
+            <a>
+              <router-link tag="span" :to="{name: 'create'}">Create an Event</router-link>
+            </a>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-action>
+            <v-icon>mdi-calendar-alert</v-icon>
+          </v-list-item-action>
+          <v-list-item-content @click="openclose">Get an event</v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-action>
+            <v-icon>mdi-account-group-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <a>
+              <router-link tag="span" :to="{name: 'about'}">About</router-link>
+            </a>
+          </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
     <v-app-bar app clipped-left>
-      <v-app-bar-nav-icon @click.stop="navmenu"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon color="teal" @click.stop="navmenu"></v-app-bar-nav-icon>
       <v-toolbar-title>Take My Time</v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-btn icon @click="openclose">
+      <v-btn icon color="teal" @click="openclose">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
     </v-app-bar>
@@ -59,13 +88,7 @@ export default {
     id: 0,
     code: "",
     drawer: null,
-    append: false,
-    items: [
-      { title: "Home", icon: "mdi-home-city", path: "home" },
-      { title: "Create an Event", icon: "mdi-calendar", path: "create" },
-      { title: "Get an Event", icon: "mdi-calendar-alert", path: "getEvent" },
-      { title: "About", icon: "mdi-account-group-outline", path: "about" }
-    ]
+    append: false
   }),
   computed: {},
   methods: {
@@ -78,7 +101,7 @@ export default {
         this.navmenuopen = false;
 
         router
-          .push({ name: "get-event", params: { guid: this.code } })
+          .push({ name: "getevent", params: { guid: this.code } })
           .catch(error => console.log(error.message));
 
         router.go();
@@ -111,11 +134,26 @@ export default {
 };
 </script>
 <style>
+a {
+  text-decoration: none;
+  text-decoration-color: none;
+  text-align: left;
+  color: white !important;
+}
+li {
+  text-decoration: none;
+}
+
 .card {
   height: 100%;
 }
-.footer{
- right: 10px;
- position: absolute;
+.footer {
+  right: 10px;
+  position: absolute;
+}
+
+.vuecolor {
+  color: teal;
+  font-weight: bold;
 }
 </style>

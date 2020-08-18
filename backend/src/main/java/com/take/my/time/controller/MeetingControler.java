@@ -1,6 +1,5 @@
 package com.take.my.time.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -18,10 +17,10 @@ import com.take.my.time.exceptions.IncorrectMeetingException;
 import com.take.my.time.model.Meeting;
 import com.take.my.time.model.DTO.MeetingDTOOutput;
 import com.take.my.time.model.DTO.ParticipationDTO;
-import com.take.my.time.repositories.MeetingRepository;
 import com.take.my.time.services.MeetingService;
 
 @RestController
+@RequestMapping("api/")
 public class MeetingControler {
 
   private MeetingService meetingService;
@@ -32,7 +31,7 @@ public class MeetingControler {
 
   }
 
- 
+
   @Transactional
   @PostMapping(path = "/addmeeting", consumes = "application/json", produces = "application/json")
   public ResponseEntity addMeeting(@RequestBody String pMeeting) {
@@ -41,7 +40,7 @@ public class MeetingControler {
     ResponseEntity<?> response = null;
 
     try {
-    	 isValid(pMeeting);
+      isValid(pMeeting);
       meeting = meetingService.mapMeeting(pMeeting);
       Meeting meetingReturn = meetingService.addMeeting(meeting);
 
@@ -54,7 +53,7 @@ public class MeetingControler {
 
 
   @Transactional
-  @RequestMapping(path = "/getmeeting",method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(path = "/getmeeting", method = RequestMethod.GET, produces = "application/json")
   public ResponseEntity getMeeting(@RequestParam("guid") String guid) {
 
 
@@ -62,7 +61,7 @@ public class MeetingControler {
     Optional<Meeting> meetingOptional;
     ResponseEntity<?> response = null;
     try {
-    	
+
       isValid(guid);
       meetingOptional = meetingService.getMeeting(guid);
 
@@ -90,13 +89,13 @@ public class MeetingControler {
    * @param guid
    * @return
    */
-  
-  private  Boolean isValid(String pMeeting) throws Exception {
 
-	  if (pMeeting.contains("!") || pMeeting.contains("<") || pMeeting.contains(")")) {
-	      throw new IncorrectMeetingException();
-	    }
-    
+  private Boolean isValid(String pMeeting) throws Exception {
+
+    if (pMeeting.contains("!") || pMeeting.contains("<") || pMeeting.contains(")")) {
+      throw new IncorrectMeetingException();
+    }
+
     return true;
   }
 
@@ -129,7 +128,7 @@ public class MeetingControler {
 
     MeetingDTOOutput meetingReturn = null;
     try {
-    	
+
       isValid(updateDTO);
 
       ParticipationDTO participation = meetingService.mapToParticpationDTO(updateDTO);
