@@ -1,96 +1,107 @@
 <template>
-<v-flex>
-  <v-container fluid>
-    <v-form ref="form" lazy-validation>
-      
-      <TitleVue title="CREATE AN EVENT" />
-     
-      <v-row justify="space-around">
-        <v-col sm="12" md="4">
-          <div class="ma-3">
-            <div align="center">
-              <h3 class="ma-3">Find an event title</h3>
-              <v-text-field
-                label="Title"
-                v-model="title"
-                :counter="20"
-                :rules="titleRules"
-                required
-                outlined
-                maxlength="20"
-              ></v-text-field>
-              <h3 class="ma-3">Indicate your name</h3>
-              <v-text-field
-                v-model="name"
-                :counter="20"
-                :rules="nameRules"
-                label="Name"
-                required
-                outlined
-                maxlength="20"
-              ></v-text-field>
-              <v-btn class="ma-2 createButton" @click="validate">Create an event</v-btn>
-            </div>
-            <div class="ma-4 hours" align="center" justify="center">
-              <div class="maxwidth">
-                <v-expansion-panels fixed="true">
-                  <h3 class="ma-2">Hours for selected days (optional) </h3>
-                  <v-expansion-panel v-for="day in selectedDays" :key="day.date">
-                    <v-expansion-panel-header>
-                      <v-icon>mdi-clock</v-icon>
-                      <div>
-                        <template>{{day.date}}</template>
-                      </div>
-                    </v-expansion-panel-header>
-                    <v-expansion-panel-content class="pa-1">
-                      <v-text-field 
-                      v-model="day.hour" 
-                      label="Hours" 
-                      outlined type="time" 
-                      ></v-text-field>
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>
-                </v-expansion-panels>
+  <v-flex>
+    <v-container fluid>
+      <v-form ref="form" lazy-validation>
+        <TitleVue title="CREATE AN EVENT" />
+
+        <v-row justify="space-around">
+          <v-col sm="12" md="4">
+            <div class="ma-3">
+              <div align="center">
+                <v-card max-width="800" class="mx-auto">
+                  <v-toolbar color="teal" dark>
+                    <v-toolbar-title class="title"> CHOOSE A NAME AND AN AEVENT TITLE</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                  </v-toolbar>
+                  <v-text-field
+                    label="Title"
+                    v-model="title"
+                    :counter="20"
+                    :rules="titleRules"
+                    required
+                    outlined
+                    class="ma-10"
+                    maxlength="20"
+                  ></v-text-field>
+                  <v-text-field
+                    v-model="name"
+                    :counter="20"
+                    :rules="nameRules"
+                    label="Name"
+                    required
+                    class="ma-10"
+                    outlined
+                    maxlength="20"
+                  ></v-text-field>
+                  <v-btn class="ma-2 createButton" @click="validate">Create an event</v-btn>
+                </v-card>
+              </div>
+              <div class="ma-4 hours" align="center" justify="center">
+                <div class="maxwidth">
+                  <v-expansion-panels fixed="true">
+                       <v-card max-width="800" class="mx-auto">
+                  <v-toolbar color="teal" dark>
+                    <v-toolbar-title>Hours for selected days (optional)</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                  </v-toolbar>
+                    <v-expansion-panel v-for="day in selectedDays" :key="day.date">
+                      <v-expansion-panel-header>
+                        <v-icon>mdi-clock</v-icon>
+                        <div>
+                          <template>{{day.date}}</template>
+                        </div>
+                      </v-expansion-panel-header>
+                      <v-expansion-panel-content class="pa-1">
+                        <v-text-field v-model="day.hour" label="Hours" outlined type="time"></v-text-field>
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+                       </v-card>
+                  </v-expansion-panels>
+                </div>
               </div>
             </div>
-          </div>
-        </v-col>
-        <v-col sm="12" md="6" class="ma-2">
-          <div align="center" class="picker ma-4">
-            
-            <h3 class="ma-4">Choose a date for your event (max : 5)</h3>
-            <div v-if="!dateIsChosen" align="center" class="error">
-            <p class="ma-0" >  <v-icon>mdi-alert</v-icon> Choose at least one date  <v-icon>mdi-alert</v-icon> </p>
-            </div>
-            <vc-date-picker
-              mode="multiple"
-              is-expanded
-              v-model="dates"
-              is-inline
-              :available-dates="availableDates"
-              popover-visibility="focus"
-              color="teal"
-              @dayclick="dayClicked"
-              :rules="datesRules"
-              :columns="$screens({ default: 1, lg: 2 })"
-              :rows="$screens({ default: 1, lg: 2 })"
-              is-dark
-            >
-              <!-- :attributes="attributes" -->
-            </vc-date-picker>
+          </v-col>
+          <v-col sm="12" md="6" class="ma-2">
+            <div align="center" class="picker ma-4">
+              <h3 class="ma-4">Choose a date for your event (max : 5)</h3>
               <div v-if="!dateIsChosen" align="center" class="error">
-            <p class="ma-0" >  <v-icon>mdi-alert</v-icon> Choose at least one date  <v-icon>mdi-alert</v-icon> </p>
+                <p class="ma-0">
+                  <v-icon>mdi-alert</v-icon>Choose at least one date
+                  <v-icon>mdi-alert</v-icon>
+                </p>
+              </div>
+              <vc-date-picker
+                mode="multiple"
+                is-expanded
+                v-model="dates"
+                is-inline
+                :available-dates="availableDates"
+                popover-visibility="focus"
+                color="teal"
+                @dayclick="dayClicked"
+                :rules="datesRules"
+                :columns="$screens({ default: 1, lg: 2 })"
+                :rows="$screens({ default: 1, lg: 2 })"
+                is-dark
+              >
+                <!-- :attributes="attributes" -->
+              </vc-date-picker>
+              <div v-if="!dateIsChosen" align="center" class="error">
+                <p class="ma-0">
+                  <v-icon>mdi-alert</v-icon>Choose at least one date
+                  <v-icon>mdi-alert</v-icon>
+                </p>
+              </div>
             </div>
-          </div>
-        </v-col>
-      </v-row>
-    </v-form>
-  </v-container>
+          </v-col>
+        </v-row>
+      </v-form>
+    </v-container>
   </v-flex>
 </template>
 <script>
 import axios from "axios";
-import TitleVue from '../components/Title.vue';
+import TitleVue from "../components/Title.vue";
 
 export default {
   data: () => ({
@@ -98,9 +109,9 @@ export default {
     dateIsChosen: true,
     name: "",
     nameRules: [
-      v => !!v || "Name is required",
-      v => (v && v.length <= 20) || "Name must be less than 10 characters",
-      v => (v && v.length >= 2) || "Name must contain more than 2 characters"
+      (v) => !!v || "Name is required",
+      (v) => (v && v.length <= 20) || "Name must be less than 10 characters",
+      (v) => (v && v.length >= 2) || "Name must contain more than 2 characters",
     ],
     dates: [],
     selectedDays: [],
@@ -108,15 +119,16 @@ export default {
     availableDates: [],
     title: "",
     titleRules: [
-      v => !!v || "Title is required",
-      v => (v && v.length <= 20) || "Title must be less than 20 characters",
-      v => (v && v.length >= 2) || "Title must contain more than 2 characters"
+      (v) => !!v || "Title is required",
+      (v) => (v && v.length <= 20) || "Title must be less than 20 characters",
+      (v) =>
+        (v && v.length >= 2) || "Title must contain more than 2 characters",
     ],
-    datesRules: [v => !!v || "dates is required"]
+    datesRules: [(v) => !!v || "dates is required"],
   }),
   components: {
-		TitleVue
-	},
+    TitleVue,
+  },
   computed: {
     // ...mapState(["title"]),
     //   ...mapGetters(["attributes"])
@@ -133,15 +145,14 @@ export default {
         this.availability(day);
       }
     },
-    createData: vm => ({
+    createData: (vm) => ({
       title: vm.title,
       author: vm.name,
-      opportunities: vm.selectedDays
+      opportunities: vm.selectedDays,
     }),
     async validate() {
       if (this.$refs.form.validate() && this.selectedDays.length != 0) {
-         await this.addMeeting(this.createData(this));
-
+        await this.addMeeting(this.createData(this));
       } else {
         this.valid = false;
         this.dateIsChosen = true;
@@ -150,20 +161,21 @@ export default {
         }
       }
     },
-    async addMeeting( meeting) {
-    
-       await axios({
+    async addMeeting(meeting) {
+      await axios({
         method: "post",
         url: "/api/addmeeting",
         data: meeting,
-      }).then( response => this.$router.push(`/GetEvent/${response.data}`)
-      .catch(error => {console.log(error ) ; this.$router.push(`/GetEvent/error`)}));
-    
-   
+      }).then((response) =>
+        this.$router.push(`/GetEvent/${response.data}`).catch((error) => {
+          console.log(error);
+          this.$router.push(`/GetEvent/error`);
+        })
+      );
     },
-    createOpportunity: day => ({
+    createOpportunity: (day) => ({
       date: day.id,
-      hour: ""
+      hour: "",
     }),
     addOrDelete(day, couldAdd) {
       for (let dday of this.selectedDays) {
@@ -184,11 +196,16 @@ export default {
           this.availableDates.push(dday.date);
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
+@import url(https://fonts.googleapis.com/css?family=Lato:900);
+.title{
+  font-family: 'Lato', sans-serif;
+    font-size: 400;
+}
 .maxwidth {
   max-width: 400px;
 }
@@ -218,13 +235,12 @@ export default {
 }
 .fill {
   font-family: sans-serif;
-  color: rgb(65,184,131);
+  color: rgb(65, 184, 131);
   text-decoration: underline;
 }
 
-.checklabel{
+.checklabel {
   margin-top: 20px;
   margin-left: 5px;
 }
-
 </style>
