@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "opportunity")
 @JsonIgnoreProperties(value = {"id"})
-public class Opportunity implements Comparable {
+public class Opportunity implements Comparable<Opportunity> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,14 +95,7 @@ public class Opportunity implements Comparable {
     this.users = users;
   }
 
-  @Override
-  public int compareTo(Object arg0) {
-    Integer result = -1;
-    if (((Opportunity) arg0).getOpportunityDate().equals(this.opportunityDate)) {
-      result = 0;
-    }
-    return 0;
-  }
+
 
   public String getLabel() {
     return label;
@@ -126,6 +119,16 @@ public class Opportunity implements Comparable {
     label = labellv;
 
     return label;
+
+  }
+
+  @Override
+  public int compareTo(Opportunity o) {
+    Integer result = -1;
+    if (((Opportunity) o).getOpportunityDate().equals(this.opportunityDate)) {
+      result = 0;
+    }
+    return result;
 
   }
 

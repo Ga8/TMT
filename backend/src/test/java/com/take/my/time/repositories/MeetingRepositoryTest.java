@@ -39,28 +39,29 @@ class MeetingRepositoryTest {
       new MeetingServiceImpl(meetingRepo, stateService, null);
 
   public MeetingRepositoryTest() {
-	  postgresContainer.start();
-	  
-  }
-  
-	@ClassRule
-	public static PostgreSQLContainer postgresContainer = (PostgreSQLContainer) new PostgreSQLContainer("postgres:11.1")
-			.withDatabaseName("take_my_time")
-			.withUsername("root")
-			.withPassword("root")
-			.withExposedPorts(5432);
+    postgresContainer.start();
 
-  
+  }
+
+  @ClassRule
+  public static PostgreSQLContainer postgresContainer =
+      (PostgreSQLContainer) new PostgreSQLContainer("postgres:11.1")
+          .withDatabaseName("take_my_time").withUsername("root").withPassword("root")
+          .withExposedPorts(5432);
+
+
   static class Initializer
-  implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+      implements
+        ApplicationContextInitializer<ConfigurableApplicationContext> {
     public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-        TestPropertyValues.of(
-          "spring.datasource.url=" + postgresContainer.getJdbcUrl(),
-          "spring.datasource.username=" + postgresContainer.getUsername(),
-          "spring.datasource.password=" + postgresContainer.getPassword()
-        ).applyTo(configurableApplicationContext.getEnvironment());
+      TestPropertyValues
+          .of("spring.datasource.url=" + postgresContainer.getJdbcUrl(),
+              "spring.datasource.username=" + postgresContainer.getUsername(),
+              "spring.datasource.password=" + postgresContainer.getPassword())
+          .applyTo(configurableApplicationContext.getEnvironment());
     }
-}
+  }
+
   @Test
   void SaveTest() throws JsonProcessingException {
 
@@ -75,7 +76,7 @@ class MeetingRepositoryTest {
     op.getUsers().add(user);
     meeting.getOpportunities().add(op);
 
-    Meeting meetingReturned = meetingRepo.save(meeting);
+    meetingRepo.save(meeting);
 
     Optional<Meeting> meetingReturned2 = meetingRepo.findByGuid(meeting.getGuid());
 
@@ -86,8 +87,8 @@ class MeetingRepositoryTest {
     ObjectMapper objectMapper = new ObjectMapper();
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     objectMapper.setDateFormat(df);
- //   String meeting4 = objectMapper.writeValueAsString(meetingReturned3);
-  //  System.out.println(meeting4);
+    // String meeting4 = objectMapper.writeValueAsString(meetingReturned3);
+    // System.out.println(meeting4);
 
     Assert.assertTrue(meetingReturned3.getGuid() != null);
   }
@@ -95,23 +96,15 @@ class MeetingRepositoryTest {
   @Test
   public void getMeetingTest() throws JsonProcessingException {
 
-    Meeting meeting = meetingService.mapMeeting("{\"guid\":\"\",\n" + 
-    		"\"title\":\"Test\",\n" + 
-    		"\"author\":\"michel\",\n" + 
-    		"\"opportunities\":[{\n" + 
-    		"                \"date\":\"2020-01-17\",\n" + 
-    		"                \"hour\":\"11:00\",\n" + 
-    		"                \"name\":\"michel\"\n" + 
-    		"            },\n" + 
-    		"            {\n" + 
-    		"                \"date\":\"2020-01-18\",\n" + 
-    		"                \"hour\":\"18:00\",\n" + 
-    		"                \"name\":\"michel\"\n" + 
-    		"            }]\n" + 
-    		"}");
+    Meeting meeting = meetingService.mapMeeting("{\"guid\":\"\",\n" + "\"title\":\"Test\",\n"
+        + "\"author\":\"michel\",\n" + "\"opportunities\":[{\n"
+        + "                \"date\":\"2020-01-17\",\n" + "                \"hour\":\"11:00\",\n"
+        + "                \"name\":\"michel\"\n" + "            },\n" + "            {\n"
+        + "                \"date\":\"2020-01-18\",\n" + "                \"hour\":\"18:00\",\n"
+        + "                \"name\":\"michel\"\n" + "            }]\n" + "}");
 
 
-    Meeting meetingReturned = meetingRepo.save(meeting);
+    meetingRepo.save(meeting);
 
     Optional<Meeting> meetingReturned2 = meetingRepo.findByGuid(meeting.getGuid());
 
@@ -122,8 +115,8 @@ class MeetingRepositoryTest {
     ObjectMapper objectMapper = new ObjectMapper();
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     objectMapper.setDateFormat(df);
-   // String meeting4 = objectMapper.writeValueAsString(meetingReturned3);
-   // System.out.println(meeting4);
+    // String meeting4 = objectMapper.writeValueAsString(meetingReturned3);
+    // System.out.println(meeting4);
 
     Assert.assertTrue(meetingReturned3.getGuid() != null);
 

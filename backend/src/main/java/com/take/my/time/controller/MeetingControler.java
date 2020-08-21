@@ -1,5 +1,6 @@
 package com.take.my.time.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -92,27 +93,28 @@ public class MeetingControler {
 
   private Boolean isValid(String pMeeting) throws Exception {
 
-    if (pMeeting.contains("!") || pMeeting.contains("<") || pMeeting.contains(")")) {
+    if (pMeeting.contains("!") || pMeeting.contains("<") || pMeeting.contains(")")
+        || pMeeting.length() > 1000) {
       throw new IncorrectMeetingException();
     }
 
     return true;
   }
 
-//  /**
-//   * 
-//   * @return
-//   */
-//  @Transactional
-//  @RequestMapping(path = "/get", method = RequestMethod.GET, produces = "application/json")
-//  public ResponseEntity getMeeting() {
-//
-//    List<Meeting> meetingOptional = repository.findAll();
-//
-//    ResponseEntity<?> response = ResponseEntity.ok().body(meetingOptional);
-//
-//    return response;
-//  }
+  /**
+   * 
+   * @return
+   */
+  @Transactional
+  @RequestMapping(path = "/get", method = RequestMethod.GET, produces = "application/json")
+  public ResponseEntity getMeeting() {
+
+    List<Meeting> meetingOptional = meetingService.getAllMeeting();
+
+    ResponseEntity<?> response = ResponseEntity.ok().body(meetingOptional);
+
+    return response;
+  }
 
 
   /**
