@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,17 +33,18 @@ public class Meeting extends EntityWithUUID implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
+  @Column(name = "meeting_id")
   private Long id;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-  @Column(name = "date")
+  @Column(name = "meeting_final_date")
   private Date meetingDate;
 
   private String title;
 
-
-  private String author;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "author")
+  private User author;
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "user_meeting", joinColumns = {
@@ -117,11 +119,11 @@ public class Meeting extends EntityWithUUID implements Serializable {
   }
 
 
-  public String getAuthor() {
+  public User getAuthor() {
     return author;
   }
 
-  public void setAuthor(String author) {
+  public void setAuthor(User author) {
     this.author = author;
   }
 

@@ -13,8 +13,6 @@ public class MeetingDTOOutput implements Serializable {
 
   private String title;
 
-
-
   private String author;
 
   private List<OpportunityDTOOutput> opportunitiesOutput;

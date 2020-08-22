@@ -34,16 +34,15 @@ public class OpportunityServiceImpl implements OpportunityService {
 
       UserOpportunityHour hourOp = new UserOpportunityHour();
       // si une heure renseigné
-      if (opInput.getHour() != null) {
+     
         hourOp = new UserOpportunityHour(user, opInput.getHour());
-      }
+      
 
 
       // si existant
       if (opportunityByDate.get(opInput.getDate()) != null) {
         Opportunity opportunityToUpdate = opportunityByDate.get(opInput.getDate());
-        opportunityToUpdate.getUsers().add(user);
-        opportunityToUpdate.getUserHour().add(hourOp);
+        opportunityToUpdate.getUsers().add(hourOp);
 
         oldMeeting.getOpportunities().add(opportunityToUpdate);
 
@@ -54,8 +53,8 @@ public class OpportunityServiceImpl implements OpportunityService {
         Opportunity newOp = new Opportunity();
 
         newOp.setOpportunityDate(opInput.getDate());
-        newOp.getUsers().add(user);
-        newOp.getUserHour().add(hourOp);
+        newOp.getUsers().add(hourOp);
+      
         oldMeeting.getOpportunities().add(newOp);
 
       }
@@ -77,11 +76,17 @@ public class OpportunityServiceImpl implements OpportunityService {
       opDTO.setColor(op.getState().toLowerCase());
       opDTO.setDate(op.getOpportunityDate());
 
-      if (op.getUserHour() != null) {
+      if (op.getUsers() != null) {
         String label = "";
-        for (UserOpportunityHour userOpHour : op.getUserHour()) {
-          label = label + userOpHour.getUser().getName() + " - " + userOpHour.getHour() + " |"
+        for (UserOpportunityHour userOpHour : op.getUsers()) {
+        	
+        	if (userOpHour.getHour() != null) {
+          label = label + userOpHour.getUser().getName() + " - " + userOpHour.getHour() + " | "
               + newLine;
+        	}else {
+        		 label = label + userOpHour.getUser().getName() + " | "
+        	              + newLine;
+        	}
         }
         opDTO.setLabel(label);
       }

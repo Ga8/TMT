@@ -1,20 +1,14 @@
 package com.take.my.time.model;
 
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,21 +22,19 @@ public class Opportunity implements Comparable<Opportunity> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name="opportunity_id")
   private Long id;
 
   @Column(name = "date")
   private String opportunityDate;
 
-  @OneToMany(cascade = CascadeType.ALL)
-  private List<UserOpportunityHour> userHour;
 
   @Column(name = "color")
   private String state;
 
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(name = "user_opportunity", joinColumns = {
-      @JoinColumn(name = "opportunity_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
-  private Set<User> users;
+ 
+  @OneToMany(mappedBy = "opportunity")
+  private Set<UserOpportunityHour> users;
 
   private String label;
 
@@ -67,31 +59,31 @@ public class Opportunity implements Comparable<Opportunity> {
     return state;
   }
 
-  public Set<User> getUsers() {
-    if (users == null) {
-      users = new HashSet<User>();
-    }
-    return users;
-  }
+//  public Set<User> getUsers() {
+//    if (users == null) {
+//      users = new HashSet<User>();
+//    }
+//    return users;
+//  }
 
   public void setState(String state) {
     this.state = state;
 
   }
 
-  public List<UserOpportunityHour> getUserHour() {
-    if (userHour == null) {
-      userHour = new ArrayList<UserOpportunityHour>();
-    }
+//  public List<UserOpportunityHour> getUserHour() {
+//    if (userHour == null) {
+//      userHour = new ArrayList<UserOpportunityHour>();
+//    }
+//
+//    return userHour;
+//  }
 
-    return userHour;
-  }
+//  public void setUserHour(List<UserOpportunityHour> userHour) {
+//    this.userHour = userHour;
+//  }
 
-  public void setUserHour(List<UserOpportunityHour> userHour) {
-    this.userHour = userHour;
-  }
-
-  public void setUsers(Set<User> users) {
+  public void setUsers(Set<UserOpportunityHour> users) {
     this.users = users;
   }
 
@@ -109,11 +101,13 @@ public class Opportunity implements Comparable<Opportunity> {
 
     String labellv = "";
 
-    for (UserOpportunityHour hourDetails : userHour) {
+    for (UserOpportunityHour userDetails : this.users) {
 
-      if (hourDetails.getHour() != null && hourDetails.getUser().getName() != null) {
+      if (userDetails.getHour() != null && userDetails.getUser().getName() != null) {
         labellv =
-            labellv + hourDetails.getUser().getName() + " - " + hourDetails.getHour() + " /\n ";
+            labellv + userDetails.getUser().getName() + " - " + userDetails.getHour() + " /\n ";
+      }else {
+    	  labellv = labellv + userDetails.getUser().getName();
       }
     }
     label = labellv;
@@ -132,5 +126,13 @@ public class Opportunity implements Comparable<Opportunity> {
 
   }
 
+public Set<UserOpportunityHour> getUsers() {
+	if (users==null) {
+		users = new HashSet<UserOpportunityHour>();
+	}
+	return users;
+}
+
+  
 
 }

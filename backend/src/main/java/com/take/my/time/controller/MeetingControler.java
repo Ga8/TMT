@@ -18,6 +18,7 @@ import com.take.my.time.exceptions.IncorrectMeetingException;
 import com.take.my.time.model.Meeting;
 import com.take.my.time.model.DTO.MeetingDTOOutput;
 import com.take.my.time.model.DTO.ParticipationDTO;
+import com.take.my.time.services.EmailService;
 import com.take.my.time.services.MeetingService;
 
 @RestController
@@ -25,10 +26,13 @@ import com.take.my.time.services.MeetingService;
 public class MeetingControler {
 
   private MeetingService meetingService;
+  
+  private EmailService emailService;
 
 
-  public MeetingControler(MeetingService meetingService) {
+  public MeetingControler(MeetingService meetingService, EmailService emailService) {
     this.meetingService = meetingService;
+    this.emailService = emailService;
 
   }
 
@@ -46,6 +50,13 @@ public class MeetingControler {
       Meeting meetingReturn = meetingService.addMeeting(meeting);
 
       response = ResponseEntity.ok().body(meetingReturn.getGuid());
+      
+      if (meeting.getAuthor().getEmail() != null) {
+    	  emailService.sendConfirmationCreationEmail(meeting.getAuthor(),
+    			  meetingReturn.getGuid().toString(), "not implemented");
+      }
+      
+      
     } catch (Exception e) {
       response = ResponseEntity.badRequest().body(e.getMessage());
     }

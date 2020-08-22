@@ -139,7 +139,7 @@ public class MeetingServiceImpl implements MeetingService {
       // objectMapper.setDateFormat(df);
       meetingDto = objectMapper.readValue(pMeeting, MeetingDTO.class);
 
-      User user = new User(meetingDto.getAuthor());
+      User user = new User(meetingDto.getAuthor().getName());
 
       meeting.getUsers().add(user);
       meeting.setAuthor(meetingDto.getAuthor());
@@ -147,10 +147,9 @@ public class MeetingServiceImpl implements MeetingService {
       for (OpportunityDTOInput op : meetingDto.getOpportunities()) {
         Opportunity opp = new Opportunity();
         opp.setOpportunityDate(op.getDate());
-        opp.getUsers().add(user);
 
         UserOpportunityHour userHour = new UserOpportunityHour(user, op.getHour());
-        opp.getUserHour().add(userHour);
+        opp.getUsers().add(userHour);
 
 
         meeting.getOpportunities().add(opp);
@@ -182,7 +181,7 @@ public class MeetingServiceImpl implements MeetingService {
     MeetingDTOOutput dto = new MeetingDTOOutput();
     dto.setGuid(meeting.getGuid().toString());
     dto.setTitle(meeting.getTitle());
-    dto.setAuthor(meeting.getAuthor());
+    dto.setAuthor(meeting.getAuthor().getName());
     dto.setOpportunitiesOutput(opportunitiesDTO);
 
     return dto;
@@ -215,8 +214,7 @@ public class MeetingServiceImpl implements MeetingService {
   public Meeting deleteUserFromMeeting(Meeting meeting, String username) {
 
     for (Opportunity op : meeting.getOpportunities()) {
-      op.getUsers().removeIf(user -> user.getName().equals(username));
-      op.getUserHour().removeIf(user -> user.getUser().getName().equals(username));
+      op.getUsers().removeIf(userDetail -> userDetail.getUser().getName().equals(username));
 
       op.computeLabel();
     }

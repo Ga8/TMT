@@ -1,0 +1,47 @@
+
+docker pull postgres:11
+docker run --name take_my_time -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres:11
+# CREATE db 
+docker exec take_my_time psql -U root -c"CREATE DATABASE take_my_time" postgres
+
+
+CREATE TABLE user
+(
+  id   INT         not null PRIMARY KEY,
+  name VARCHAR(30) not null
+);
+
+CREATE TABLE meeting
+(
+  id        INT         NOT NULL PRIMARY KEY,
+  title     CHAR(20)    NULL,
+  state     varchar(20),
+  date      DATE        NULL,
+  guid      varchar(21) NOT NULL UNIQUE
+);
+
+CREATE TABLE opportunity
+(
+  id         INT  NOT NULL PRIMARY KEY,
+  date       DATE NULL,
+  state      varchar(20),
+  meeting_id INT  NOT NULL,
+  FOREIGN KEY (meeting_id) REFERENCES meeting (id)
+);
+
+
+CREATE TABLE user_opportunity
+(
+  user_id        INT NOT NULL,
+  opportunity_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user (id),
+  FOREIGN KEY (opportunity_id) REFERENCES opportunity (id)
+);
+
+CREATE TABLE user_meeting
+(
+  user_id    INT NOT NULL,
+  meeting_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user (id),
+  FOREIGN KEY (meeting_id) REFERENCES meeting (id)
+)

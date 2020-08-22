@@ -21,22 +21,22 @@ public class EmailController {
     this.emailService = emailService;
   }
 
-
-
-  @Transactional
-  @PostMapping(path = "/test", consumes = "application/json", produces = "application/json")
-  public String emailMe(@RequestBody String email) {
-
-    try {
-      emailService.sendConfirmationCreationEmail("guibaud_gaetan@hotmail.fr", "dede", "hehe");
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      System.out.println(e.getMessage());
-      return "NOK";
-    }
-
-    return "OK";
-  }
+// used for test
+//
+//  @Transactional
+//  @PostMapping(path = "/test", consumes = "application/json", produces = "application/json")
+//  public String emailMe(@RequestBody String email) {
+//
+//    try {
+//      emailService.sendConfirmationCreationEmail("guibaud_gaetan@hotmail.fr", "dede", "hehe");
+//    } catch (Exception e) {
+//      // TODO Auto-generated catch block
+//      System.out.println(e.getMessage());
+//      return "NOK";
+//    }
+//
+//    return "OK";
+//  }
 
 
 

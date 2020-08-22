@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.take.my.time.model.Meeting;
 import com.take.my.time.model.Opportunity;
 import com.take.my.time.model.User;
+import com.take.my.time.model.UserOpportunityHour;
 import com.take.my.time.services.impl.MeetingServiceImpl;
 import com.take.my.time.services.impl.StateServiceImpl;
 
@@ -71,7 +72,7 @@ class MeetingRepositoryTest {
 
     Opportunity op = new Opportunity();
     op.setOpportunityDate("2020-02-09");
-    User user = new User("gg");
+    UserOpportunityHour user = new UserOpportunityHour("gg");
 
     op.getUsers().add(user);
     meeting.getOpportunities().add(op);
