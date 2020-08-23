@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
-@Table(name = "meeting")
+@Table(name = "meeting", schema="public")
 @JsonIgnoreProperties(value = {"id"})
 public class Meeting extends EntityWithUUID implements Serializable {
 

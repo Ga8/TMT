@@ -26,18 +26,13 @@ uniqueConstraints = { @UniqueConstraint( columnNames = { "UOH_user_id", "UOH_opp
 public class UserOpportunityHour implements Serializable {
 
 	private static final long serialVersionUID = -6544878575922081356L;
-
-//	 @Id
-//	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-//	 @Column(name = "opportunity_user_hour_id")
-//	 private Long id;
-	
-	 @Id
-	 @OneToOne()
-	 @JoinColumn(name = "UOH_opportunity_id")
-	 private Opportunity opportunity;
 	 
-	@Id
+	  @Id
+	  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	  @Column(name="UOH_id")
+	  private Long id;
+	
+	
 	@OneToOne()
 	@JoinColumn(name = "UOH_user_id")
 	private User user;
@@ -56,7 +51,6 @@ public class UserOpportunityHour implements Serializable {
 	}
 
 	public UserOpportunityHour(User pUser, String pHour) {
-		super();
 		this.user = pUser;
 		this.hour = pHour;
 	}

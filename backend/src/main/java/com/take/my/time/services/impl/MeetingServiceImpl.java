@@ -151,7 +151,7 @@ public class MeetingServiceImpl implements MeetingService {
         UserOpportunityHour userHour = new UserOpportunityHour(user, op.getHour());
         opp.getUsers().add(userHour);
 
-
+        opp.computeLabel();
         meeting.getOpportunities().add(opp);
       }
 

@@ -4,44 +4,83 @@ docker run --name take_my_time -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PA
 # CREATE db 
 docker exec take_my_time psql -U root -c"CREATE DATABASE take_my_time" postgres
 
+-- public.users definition
 
-CREATE TABLE user
-(
-  id   INT         not null PRIMARY KEY,
-  name VARCHAR(30) not null
-);
+-- Drop table
 
-CREATE TABLE meeting
-(
-  id        INT         NOT NULL PRIMARY KEY,
-  title     CHAR(20)    NULL,
-  state     varchar(20),
-  date      DATE        NULL,
-  guid      varchar(21) NOT NULL UNIQUE
-);
+-- DROP TABLE public.users;
 
-CREATE TABLE opportunity
-(
-  id         INT  NOT NULL PRIMARY KEY,
-  date       DATE NULL,
-  state      varchar(20),
-  meeting_id INT  NOT NULL,
-  FOREIGN KEY (meeting_id) REFERENCES meeting (id)
+CREATE TABLE public.users (
+	user_id bigserial NOT NULL,
+	user_email varchar(255) NULL,
+	user_name varchar(255) NULL,
+	CONSTRAINT users_pkey PRIMARY KEY (user_id)
 );
 
 
-CREATE TABLE user_opportunity
-(
-  user_id        INT NOT NULL,
-  opportunity_id INT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES user (id),
-  FOREIGN KEY (opportunity_id) REFERENCES opportunity (id)
+-- public.meeting definition
+
+-- Drop table
+
+-- DROP TABLE public.meeting;
+
+CREATE TABLE public.meeting (
+	meeting_id bigserial NOT NULL,
+	guid uuid NULL,
+	meeting_final_date timestamp NULL,
+	state varchar(255) NULL,
+	title varchar(255) NULL,
+	author int8 NULL,
+	CONSTRAINT meeting_pkey PRIMARY KEY (meeting_id),
+	CONSTRAINT fk86cgc7af4tkhvue4asksbe890 FOREIGN KEY (author) REFERENCES users(user_id)
 );
 
-CREATE TABLE user_meeting
-(
-  user_id    INT NOT NULL,
-  meeting_id INT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES user (id),
-  FOREIGN KEY (meeting_id) REFERENCES meeting (id)
-)
+
+-- public.opportunity definition
+
+-- Drop table
+
+-- DROP TABLE public.opportunity;
+
+CREATE TABLE public.opportunity (
+	opportunity_id bigserial NOT NULL,
+	"label" varchar(255) NULL,
+	"date" varchar(255) NULL,
+	color varchar(255) NULL,
+	meeting_id int8 NULL,
+	CONSTRAINT opportunity_pkey PRIMARY KEY (opportunity_id),
+	CONSTRAINT fk8w0go6w402151p8gya2cuv6a4 FOREIGN KEY (meeting_id) REFERENCES meeting(meeting_id)
+);
+
+
+-- public.user_meeting definition
+
+-- Drop table
+
+-- DROP TABLE public.user_meeting;
+
+CREATE TABLE public.user_meeting (
+	meeting_id int8 NOT NULL,
+	user_id int8 NOT NULL,
+	CONSTRAINT user_meeting_pkey PRIMARY KEY (meeting_id, user_id),
+	CONSTRAINT fk6nin1u48wao16blvnqfil9t5f FOREIGN KEY (meeting_id) REFERENCES meeting(meeting_id),
+	CONSTRAINT fke6lj897wol258h4p85y312cgx FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+
+-- public.user_opportunity definition
+
+-- Drop table
+
+-- DROP TABLE public.user_opportunity;
+
+CREATE TABLE public.user_opportunity (
+	"hour" varchar(255) NULL,
+	uoh_user_id int8 NOT NULL,
+	uoh_opportunity_id int8 NOT NULL,
+	CONSTRAINT uk_9mrntd2ou2a25wehv66u27q2y UNIQUE (uoh_user_id),
+	CONSTRAINT uk_ojwg52sjvh7ofhd3n54p6k6fk UNIQUE (uoh_opportunity_id),
+	CONSTRAINT user_opportunity_pkey PRIMARY KEY (uoh_user_id, uoh_opportunity_id),
+	CONSTRAINT fkmdebw5t02ssgcustr24d95c82 FOREIGN KEY (uoh_opportunity_id) REFERENCES opportunity(opportunity_id),
+	CONSTRAINT fkn64kf2dbdpdrydx0cm58did8r FOREIGN KEY (uoh_user_id) REFERENCES users(user_id)
+);
