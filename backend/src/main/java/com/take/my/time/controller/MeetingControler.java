@@ -26,7 +26,7 @@ import com.take.my.time.services.MeetingService;
 public class MeetingControler {
 
   private MeetingService meetingService;
-  
+
   private EmailService emailService;
 
 
@@ -50,14 +50,14 @@ public class MeetingControler {
       Meeting meetingReturn = meetingService.addMeeting(meeting);
 
       response = ResponseEntity.ok().body(meetingReturn.getGuid());
-      
+
       if (meeting.getAuthor().getEmail() != null) {
-    	  emailService.sendConfirmationCreationEmail(meeting.getAuthor(),
-    			  meetingReturn.getGuid().toString(), "not implemented");
+        emailService.sendConfirmationCreationEmail(meeting, "not implemented");
       }
-      
-      
+
+
     } catch (Exception e) {
+      System.out.println(e.getMessage());
       response = ResponseEntity.badRequest().body(e.getMessage());
     }
     return response;
@@ -106,7 +106,7 @@ public class MeetingControler {
 
     if (pMeeting.contains("!") || pMeeting.contains("<") || pMeeting.contains(")")
         || pMeeting.length() > 1000) {
-      throw new IncorrectMeetingException();
+      throw new IncorrectMeetingException("Unauthorised payload");
     }
 
     return true;

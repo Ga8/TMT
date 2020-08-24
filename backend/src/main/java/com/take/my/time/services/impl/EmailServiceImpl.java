@@ -1,11 +1,13 @@
 package com.take.my.time.services.impl;
 
-import org.springframework.mail.SimpleMailMessage;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.take.my.time.configuration.EmailCfg;
-import com.take.my.time.model.User;
+import com.take.my.time.model.Meeting;
 import com.take.my.time.services.EmailService;
 
 
@@ -14,8 +16,8 @@ public class EmailServiceImpl implements EmailService {
 
   private EmailCfg emailCfg;
   private JavaMailSenderImpl mailSender;
-  
-  private static final String lineSeparator = System.lineSeparator();
+
+  private static final String lineSeparator = "</BR>";
 
 
   public EmailServiceImpl(EmailCfg emailCfg, JavaMailSenderImpl mailSender) {
@@ -30,22 +32,24 @@ public class EmailServiceImpl implements EmailService {
 
 
 
-@Override
-public void sendConfirmationCreationEmail(User user, String guid, String secureCode) throws Exception {
+  @Override
+  public void sendConfirmationCreationEmail(Meeting meeting, String secureCode) throws Exception {
 
-    SimpleMailMessage message = new SimpleMailMessage();
-    message.setSubject("Confirmation of event creation with code : " + guid);
-    message.setFrom("NoReply@TakeMyTime.com");
-    message.setTo(user.getEmail());
-    message.setText("Hello dear " + user.getName() + "," + lineSeparator
-    		+ "you succefully create an event with following information : " + lineSeparator + 
-    		"Event GUID : " +guid + " (it's the needed code for yours guests)" +lineSeparator +
-    		"The super code : " + secureCode + "( that code allow you to choose the final date of the event.)" 
-    		+ lineSeparator + lineSeparator + lineSeparator
-    		+ "Have a good day." 
-    		);
 
-    mailSender.send(message);
-}
+    MimeMessage mimeMessage = mailSender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+    helper.setSubject("Confirmation of event creation : " + meeting.getTitle());
+    helper.setFrom("NoReply@TakeMyTime.com");
+    helper.setTo(meeting.getAuthor().getEmail());
+    String text = "Hello dear " + meeting.getAuthor().getName() + "," + lineSeparator
+        + "you succefully create an event with following information : " + lineSeparator
+        + "<h4> Event GUID : " + meeting.getGuid() + "</h4> " + lineSeparator
+        + " <h4>The owner event code : " + secureCode + "</h4> " + lineSeparator + lineSeparator
+        + "Here is the link of your event : <a> http://takemytime.net/api/getmeeting?guid="
+        + meeting.getGuid() + "</a>" + lineSeparator + lineSeparator + "Have a good day.";
+    helper.setText(text, true);
+
+    mailSender.send(mimeMessage);
+  }
 
 }

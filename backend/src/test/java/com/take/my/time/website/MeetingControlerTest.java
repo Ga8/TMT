@@ -4,10 +4,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.StringJoiner;
 
 import org.junit.ClassRule;
 import org.junit.jupiter.api.Test;
@@ -33,16 +35,21 @@ class MeetingControlerTest {
   @Autowired
   private MockMvc mvc;
 
+  private String meeting;
+
+  private String badMeeting;
+
   @ClassRule
   public static PostgreSQLContainer postgresContainer =
       (PostgreSQLContainer) new PostgreSQLContainer("postgres:11.1")
           .withDatabaseName("take_my_time").withUsername("root").withPassword("root")
           .withExposedPorts(5432);
 
-  public MeetingControlerTest() throws SQLException {
+  public MeetingControlerTest() throws SQLException, IOException {
 
     postgresContainer.start();
-
+    this.meeting = createMessageContentFromFile("./src/test/resources/meeting.json");
+    this.badMeeting = createMessageContentFromFile("./src/test/resources/meeting_too_big.json");
   }
 
   static class Initializer
@@ -57,34 +64,48 @@ class MeetingControlerTest {
     }
   }
 
+  public String createMessageContentFromFile(String path) throws IOException {
+
+
+    StringJoiner joiner = new StringJoiner(" ");
+    for (String item : Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8)) {
+      joiner.add(item.toString());
+    }
+
+    return joiner.toString();
+  }
+
   @Test
   void testAddMeeting() throws Exception {
-    String URI = "/addmeeting";
-    String path = "./src/test/resources/meeting.json";
+    String URI = "/api/addmeeting";
 
     // System.out.println("Print :::::::::::::::::" + Files.readString(Paths.get(path)));
 
-    ResultActions action = mvc.perform(MockMvcRequestBuilders.post(URI)
-        .accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
-        .content(Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8).toString()));
+    ResultActions action =
+        mvc.perform(MockMvcRequestBuilders.post(URI).accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON).content(meeting));
     action.andExpect(status().isOk());
 
   }
 
+
+
   @Test
   void testGetMeeting() throws Exception {
 
-    String URI = "/addmeeting";
+    String URI = "/api/addmeeting";
     String path = "./src/test/resources/meeting.json";
 
-    ResultActions action = mvc.perform(MockMvcRequestBuilders.post(URI)
-        .accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
-        .content(Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8).toString()));
+
+
+    ResultActions action =
+        mvc.perform(MockMvcRequestBuilders.post(URI).accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON).content(meeting));
     action.andExpect(status().isOk());
     MvcResult result = action.andReturn();
 
     String id = result.getResponse().getContentAsString().replace("\"", "");
-    String get_URI = "/getmeeting";
+    String get_URI = "/api/getmeeting";
 //			System.out.println(id);
     ResultActions get_result = mvc.perform(
         MockMvcRequestBuilders.get(get_URI).accept(MediaType.APPLICATION_JSON).param("guid", id));
@@ -107,14 +128,14 @@ class MeetingControlerTest {
    */
   @Test
   void testAddWrongMeeting() throws Exception {
-    String URI = "/addmeeting";
+    String URI = "/api/addmeeting";
     String path = "./src/test/resources/meeting_too_big.json";
 
     // System.out.println("Print :::::::::::::::::" + Files.readString(Paths.get(path)));
 
-    ResultActions action = mvc.perform(MockMvcRequestBuilders.post(URI)
-        .accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
-        .content(Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8).toString()));
+    ResultActions action =
+        mvc.perform(MockMvcRequestBuilders.post(URI).accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON).content(badMeeting));
     action.andExpect(status().is4xxClientError());
 
   }
