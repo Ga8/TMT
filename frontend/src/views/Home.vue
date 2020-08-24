@@ -1,7 +1,8 @@
 <template>
-
- <TitleVue title="CREATE AN EVENT" />
-
+<v-flex>
+ <TitleVue title="WELCOME" />
+ 
+</v-flex>
 </template>
 <script>
 import TitleVue from '../components/Title.vue';

@@ -5,12 +5,23 @@
         <TitleVue title="CREATE AN EVENT" />
 
         <v-row justify="space-around">
+
+          <!-- first  box -->
           <v-col sm="12" md="4">
             <div class="ma-3">
               <div align="center">
                 <v-card max-width="800" class="mx-auto">
                   <v-toolbar color="teal" dark>
-                    <v-toolbar-title class="title"> CHOOSE A NAME AND AN AEVENT TITLE</v-toolbar-title>
+                    <v-toolbar-title class="title">Choose a name an a title for your event</v-toolbar-title>
+                    <v-tooltip right>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
+                      </template>
+                      <span>
+                        The name and the title
+                        <br />are required
+                      </span>
+                    </v-tooltip>
                     <v-spacer></v-spacer>
                   </v-toolbar>
                   <v-text-field
@@ -33,37 +44,68 @@
                     outlined
                     maxlength="20"
                   ></v-text-field>
-                  <v-btn class="ma-2 createButton" @click="validate">Create an event</v-btn>
+                  <v-text-field
+                    v-model="email"
+                    :rules="[ rules.email]"
+                    label="E-mail"
+                    class="ma-10"
+                    outlined
+                    :counter="50"
+                    maxlength="50"
+                  ></v-text-field>
+                  <v-btn class="ma-2 pulse-button" color=teal @click="validate">Create an event</v-btn>
                 </v-card>
               </div>
-              <div class="ma-4 hours" align="center" justify="center">
-                <div class="maxwidth">
-                  <v-expansion-panels fixed="true">
-                       <v-card max-width="800" class="mx-auto">
-                  <v-toolbar color="teal" dark>
-                    <v-toolbar-title>Hours for selected days (optional)</v-toolbar-title>
-                    <v-spacer></v-spacer>
-                  </v-toolbar>
-                    <v-expansion-panel v-for="day in selectedDays" :key="day.date">
-                      <v-expansion-panel-header>
-                        <v-icon>mdi-clock</v-icon>
-                        <div>
-                          <template>{{day.date}}</template>
-                        </div>
-                      </v-expansion-panel-header>
-                      <v-expansion-panel-content class="pa-1">
-                        <v-text-field v-model="day.hour" label="Hours" outlined type="time"></v-text-field>
-                      </v-expansion-panel-content>
-                    </v-expansion-panel>
-                       </v-card>
-                  </v-expansion-panels>
-                </div>
-              </div>
+
+              <!-- optional hours card -->
+              <v-card max-width="800" class="mx-auto mt-8">
+                <v-toolbar color="teal" dark>
+                  <v-toolbar-title class="title" justify="center"> Hours for selected days</v-toolbar-title>
+
+                  <v-tooltip right>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
+                    </template>
+                    <span>
+                      The Hours are optional 
+                    </span>
+                  </v-tooltip>
+                </v-toolbar>
+                    <v-expansion-panels fixed="true">
+                        <v-expansion-panel v-for="day in selectedDays" :key="day.date">
+                          <v-expansion-panel-header>
+                            <v-icon>mdi-clock</v-icon>
+                            <div>
+                              <template>{{day.date}}</template>
+                            </div>
+                          </v-expansion-panel-header>
+                          <v-expansion-panel-content class="pa-1">
+                            <v-text-field class="ma-auto hours" v-model="day.hour" label="Hours" outlined type="time"></v-text-field>
+                          </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
+              </v-card>
             </div>
           </v-col>
-          <v-col sm="12" md="6" class="ma-2">
-            <div align="center" class="picker ma-4">
-              <h3 class="ma-4">Choose a date for your event (max : 5)</h3>
+          <v-col sm="12" md="6" >
+
+
+                <v-card max-width="800" class="mx-auto mt-4">
+                <v-toolbar color="teal" dark>
+                  <v-toolbar-title class="title" justify="center"> Choose disponibilities for your event</v-toolbar-title>
+
+                  <v-tooltip right>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
+                    </template>
+                    <span>
+                      You can choose 5 disponibilities
+                    </span>
+                  </v-tooltip>
+                </v-toolbar>
+            <!-- date picker -->
+            <div align="center" class="picker ">
+      
               <div v-if="!dateIsChosen" align="center" class="error">
                 <p class="ma-0">
                   <v-icon>mdi-alert</v-icon>Choose at least one date
@@ -93,6 +135,7 @@
                 </p>
               </div>
             </div>
+                </v-card>
           </v-col>
         </v-row>
       </v-form>
@@ -109,9 +152,9 @@ export default {
     dateIsChosen: true,
     name: "",
     nameRules: [
-      (v) => !!v || "Name is required",
-      (v) => (v && v.length <= 20) || "Name must be less than 10 characters",
-      (v) => (v && v.length >= 2) || "Name must contain more than 2 characters",
+      v => !!v || "Name is required",
+      v => (v && v.length <= 20) || "Name must be less than 10 characters",
+      v => (v && v.length >= 2) || "Name must contain more than 2 characters"
     ],
     dates: [],
     selectedDays: [],
@@ -119,15 +162,24 @@ export default {
     availableDates: [],
     title: "",
     titleRules: [
-      (v) => !!v || "Title is required",
-      (v) => (v && v.length <= 20) || "Title must be less than 20 characters",
-      (v) =>
-        (v && v.length >= 2) || "Title must contain more than 2 characters",
+      v => !!v || "Title is required",
+      v => (v && v.length <= 20) || "Title must be less than 20 characters",
+      v => (v && v.length >= 2) || "Title must contain more than 2 characters"
     ],
-    datesRules: [(v) => !!v || "dates is required"],
+
+    datesRules: [v => !!v || "dates is required"],
+
+    rules: {
+      required: value => !!value || "Required.",
+      counter: value => value.length <= 20 || "Max 20 characters",
+      email: value => {
+        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(value) || "Invalid e-mail.";
+      }
+    }
   }),
   components: {
-    TitleVue,
+    TitleVue
   },
   computed: {
     // ...mapState(["title"]),
@@ -145,10 +197,10 @@ export default {
         this.availability(day);
       }
     },
-    createData: (vm) => ({
+    createData: vm => ({
       title: vm.title,
       author: vm.name,
-      opportunities: vm.selectedDays,
+      opportunities: vm.selectedDays
     }),
     async validate() {
       if (this.$refs.form.validate() && this.selectedDays.length != 0) {
@@ -165,17 +217,17 @@ export default {
       await axios({
         method: "post",
         url: "/api/addmeeting",
-        data: meeting,
-      }).then((response) =>
-        this.$router.push(`/GetEvent/${response.data}`).catch((error) => {
+        data: meeting
+      }).then(response =>
+        this.$router.push(`/GetEvent/${response.data}`).catch(error => {
           console.log(error);
           this.$router.push(`/GetEvent/error`);
         })
       );
     },
-    createOpportunity: (day) => ({
+    createOpportunity: day => ({
       date: day.id,
-      hour: "",
+      hour: ""
     }),
     addOrDelete(day, couldAdd) {
       for (let dday of this.selectedDays) {
@@ -196,15 +248,19 @@ export default {
           this.availableDates.push(dday.date);
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Lato:900);
-.title{
-  font-family: 'Lato', sans-serif;
-    font-size: 400;
+.title {
+  font-family: "Lato", sans-serif;
+  font-size: 400;
+  justify-content: center;
+  align-content: center;
+  align-self: center;
+  text-align: center;
 }
 .maxwidth {
   max-width: 400px;
@@ -242,5 +298,54 @@ export default {
 .checklabel {
   margin-top: 20px;
   margin-left: 5px;
+}
+
+.hours{
+  max-width: 250px;
+}
+
+.pulse-button {
+  position: relative;
+
+  border: none;
+  box-shadow: 0 0 0 0 lightyellow;
+  background-color: black;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 10;
+  cursor: pointer;
+  -webkit-animation: pulse 1.25s infinite cubic-bezier(0.33, 0, 0, 1);
+  -moz-animation: pulse 1.25s infinite cubic-bezier(0.33, 0, 0, 1);
+  -ms-animation: pulse 1.25s infinite cubic-bezier(0.33, 0, 0, 1);
+  animation: pulse 1.25s infinite cubic-bezier(0.33, 0, 0, 1);
+}
+.pulse-button:hover {
+  -webkit-animation: none;
+  -moz-animation: none;
+  -ms-animation: none;
+  animation: none;
+}
+.popover {
+  color: red;
+}
+@-webkit-keyframes pulse {
+  to {
+    box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+  }
+}
+@-moz-keyframes pulse {
+  to {
+    box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+  }
+}
+@-ms-keyframes pulse {
+  to {
+    box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+  }
+}
+@keyframes pulse {
+  to {
+    box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
+  }
 }
 </style>

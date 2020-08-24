@@ -36,12 +36,15 @@ export default {
 @import url(https://fonts.googleapis.com/css?family=Lato:900);
 body{
   font-family: 'Lato', sans-serif;
-    ;
+    
 }
 .headshot {
   box-shadow: inset  0 0 25px  white,  0 0 45px #009688 ;
   padding : 45px;
   max-width: 400px;
+  margin-left: auto;
+  margin-top: 30px;
+   margin-bottom: 30px;
 }
 .space{
     min-width: 40px;

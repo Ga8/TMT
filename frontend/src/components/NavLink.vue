@@ -4,14 +4,14 @@
     <v-navigation-drawer v-model="navmenuopen" app clipped>
       <v-list dense>
         <v-list-item>
-            <v-list-item-action>
-              <v-icon>mdi-home-city</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-                <a>
-                  <router-link tag="span" :to="{name: 'home'}">Home</router-link>
-                </a>
-            </v-list-item-content>
+          <v-list-item-action>
+            <v-icon>mdi-home-city</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <a>
+              <router-link tag="span" :to="{name: 'home'}">Home</router-link>
+            </a>
+          </v-list-item-content>
         </v-list-item>
         <v-list-item>
           <v-list-item-action>
@@ -57,9 +57,6 @@
       </v-container>
     </v-content>
 
-    <v-footer app>
-      <div class="footer">&copy; {{ new Date().getFullYear() }} Guibaud Gaëtan</div>
-    </v-footer>
     <v-bottom-sheet v-model="sheet">
       <v-sheet class="text-center" height="5%" justify="justify-center">
         <v-btn class="mt-6" color="error" @click="openclose">close</v-btn>
@@ -76,6 +73,11 @@
         <v-btn type="button" class="success ma-2" @click="getEvent">Get the event</v-btn>
       </v-sheet>
     </v-bottom-sheet>
+
+    <v-footer app height=30>
+            <div class="footer"> &copy; {{ new Date().getFullYear() }} Made with
+          <v-icon color="teal">mdi-cards-heart</v-icon> by Gaëtan Guibaud</div>
+    </v-footer>
   </v-app>
 </template>
 <script>
