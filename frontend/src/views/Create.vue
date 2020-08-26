@@ -1,8 +1,8 @@
 <template>
   <v-flex>
+        <TitleVue title="CREATE AN EVENT"  @event="validate" :numerateur="numerateur" :denominateur="denominateur" />
     <v-container fluid>
       <v-form ref="form" lazy-validation>
-        <TitleVue title="CREATE AN EVENT"  @click="validate" :numerateur="numerateur" :denominateur="denominateur" />
 
         <v-row justify="space-around">
 
@@ -53,7 +53,6 @@
                     :counter="50"
                     maxlength="50"
                   ></v-text-field>
-                  <v-btn class="ma-2 pulse-button" color=teal >Create an event</v-btn>
                 </v-card>
               </div>
 
@@ -88,8 +87,6 @@
             </div>
           </v-col>
           <v-col sm="12" md="6" >
-
-
                 <v-card max-width="800" class="mx-auto mt-4">
                 <v-toolbar class="head" color="teal" dark>
                   <v-toolbar-title class="title" justify="center"> Choose disponibilities for your event</v-toolbar-title>
@@ -153,10 +150,8 @@ export default {
     valid: true,
     dateIsChosen: true,
     denominateur : 4,
-    selectedDays: [],
-    selectedOpportunity: [],
-    availableDates: []
-   
+    availableDates: [],
+   dates : []
   }),
   components: {
     TitleVue
@@ -168,13 +163,16 @@ export default {
   methods: {
     dayClicked(day) {
       if (!day.isDisabled) {
+        
         this.selectedDay = this.createOpportunity(day);
+       
         if (this.selectedDays.length < 5) {
           this.addOrDelete(this.selectedDay, true);
         } else if (this.selectedDays.length === 5) {
           this.addOrDelete(this.selectedDay, false);
         }
         this.availability(day);
+         this.validateDate();
       }
     },
     createData: vm => ({
@@ -186,7 +184,9 @@ export default {
       opportunities: vm.selectedDays
     }),
     async validate() {
+      console.log('1111111111111');
       if (this.$refs.form.validate() && this.selectedDays.length != 0) {
+        console.log('2222222222222');
         await this.addMeeting(this.createData(this));
       } else {
         this.valid = false;
@@ -287,7 +287,7 @@ export default {
   max-width: 250px;
 }
 .head{
-  background :  linear-gradient(to right ,#051422,#075D63)
+  background :  linear-gradient(to right ,#075D63, #051422)
 }
 
 .popover {

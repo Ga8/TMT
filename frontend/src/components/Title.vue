@@ -1,14 +1,14 @@
 <template>
-  <v-container>
-    <v-btn :disabled="percentage < 80" class="invisible">
+  <v-container class="mb-10">
+    <v-btn :disabled="percentage > 98" v-on:click="$emit(event)" class="invisible">
       <div
         class="headshot headshot-1 dot "
           v-bind:class="classObject" >
 
         <v-row justify="space-around">
-          <v-spacer class="space"></v-spacer>
+         
           <span class="letter">{{title}}</span>
-          <v-spacer class="space"></v-spacer>
+        
         </v-row>
       </div>
     </v-btn>
@@ -58,6 +58,7 @@ body {
 
 .dot {
   border: 0,5px;
+
   border-radius: 50%;
   border : solid;
   border-color: #808080;
@@ -169,15 +170,12 @@ body {
   margin: 0;
   position: relative;
   color: #BFBFBF;
-  transform-style: preserve-3d;
-  perspective: 400;
   z-index: 1;
 }
 .invisible {
   margin-bottom: 35px;
   margin-top: 75px;
   background-color: none !important;
-  opacity: 100%;
   width: 0px !important;
   min-width: 0px !important;
   padding: 0px !important;
