@@ -1,56 +1,9 @@
-<template>
-  <v-flex>
-    <TitleVue title="WELCOME" :numerateur="numerateur" :denominateur="denominateur" />
-    <v-card max-width="800" class="mx-auto mt-10">
-      <v-toolbar color=#4DBA87 class="head" dark>
-        <v-toolbar-title class="title">Choose a name an a title for your event</v-toolbar-title>
-        <v-tooltip right>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
-          </template>
-          <span>
-            The name and the title
-            <br />are required
-          </span>
-        </v-tooltip>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-      <v-text-field
-        label="Title"
-        v-model="title"
-        :counter="20"
-        :rules="[validateTitle]"
-        required
-        outlined
-        class="ma-10"
-        maxlength="20"
-      ></v-text-field>
-      <v-text-field
-        v-model="name"
-        :counter="20"
-        :rules="[validateName]"
-        label="Name"
-        required
-        class="ma-10"
-        outlined
-        maxlength="20"
-      ></v-text-field>
-      <v-text-field
-        v-model="email"
-        :rules="[validateEmail]"
-        label="E-mail"
-        class="ma-10"
-        outlined
-        :counter="50"
-        maxlength="50"
-      ></v-text-field>
-    </v-card>
-  </v-flex>
-</template>
-<script>
-import TitleVue from "../components/Title.vue";
+export const TitleButtonMixin = {
 
-export default {
+    created() { 
+        console.log("test");
+    },
+    
   data: () => ({
     email: "",
     emailValid: false,
@@ -59,16 +12,15 @@ export default {
     title: "",
     titleValid : false ,
     numerateur :0,
-    denominateur : 3
+    dateValid : false,
+    dates : []
+    
   }),
-  computed: {},
-  components: {
-    TitleVue
-  },
+
   methods: {
     updateCount() {
     this.numerateur = 0 ;
-      var arr = [this.emailValid, this.titleValid, this.nameValid];
+      var arr = [this.emailValid, this.titleValid, this.nameValid, this.dateValid];
       arr.forEach((value) =>{
         if (value ){
           this.numerateur++;
@@ -113,6 +65,17 @@ export default {
        this.updateCount();
       return result;
       
+      },
+      validateDate() {
+        var result  =  "dates is required";
+        console.log(this.dates);
+           result = this.required(this.dates);
+
+           if (result === true ){
+               this.dateValid = true;
+           }
+           this.updateCount();
+        return result;
       }
     ,
     validateEmail() {
@@ -142,16 +105,3 @@ export default {
      }
   }
 };
-</script>
-<style scoped>
-
-.head{
-  background :  linear-gradient(to right ,#051422,#075D63)
-}
-.title{
-  color : #ffffff;
-  opacity: 80%;
-}
-</style>
-
-

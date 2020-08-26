@@ -2,7 +2,7 @@
   <v-flex>
     <v-container fluid>
       <v-form ref="form" lazy-validation>
-        <TitleVue title="CREATE AN EVENT" />
+        <TitleVue title="CREATE AN EVENT"  @click="validate" :numerateur="numerateur" :denominateur="denominateur" />
 
         <v-row justify="space-around">
 
@@ -11,7 +11,7 @@
             <div class="ma-3">
               <div align="center">
                 <v-card max-width="800" class="mx-auto">
-                  <v-toolbar color="teal" dark>
+                  <v-toolbar class="head" color="teal" dark>
                     <v-toolbar-title class="title">Choose a name an a title for your event</v-toolbar-title>
                     <v-tooltip right>
                       <template v-slot:activator="{ on, attrs }">
@@ -28,7 +28,7 @@
                     label="Title"
                     v-model="title"
                     :counter="20"
-                    :rules="titleRules"
+                     :rules="[validateTitle]"
                     required
                     outlined
                     class="ma-10"
@@ -37,7 +37,7 @@
                   <v-text-field
                     v-model="name"
                     :counter="20"
-                    :rules="nameRules"
+                    :rules="[validateName]"
                     label="Name"
                     required
                     class="ma-10"
@@ -46,20 +46,20 @@
                   ></v-text-field>
                   <v-text-field
                     v-model="email"
-                    :rules="[ rules.email]"
+                   :rules="[validateEmail]"
                     label="E-mail"
                     class="ma-10"
                     outlined
                     :counter="50"
                     maxlength="50"
                   ></v-text-field>
-                  <v-btn class="ma-2 pulse-button" color=teal @click="validate">Create an event</v-btn>
+                  <v-btn class="ma-2 pulse-button" color=teal >Create an event</v-btn>
                 </v-card>
               </div>
 
               <!-- optional hours card -->
               <v-card max-width="800" class="mx-auto mt-8">
-                <v-toolbar color="teal" dark>
+                <v-toolbar  class="head" color="teal" dark>
                   <v-toolbar-title class="title" justify="center"> Hours for selected days</v-toolbar-title>
 
                   <v-tooltip right>
@@ -91,7 +91,7 @@
 
 
                 <v-card max-width="800" class="mx-auto mt-4">
-                <v-toolbar color="teal" dark>
+                <v-toolbar class="head" color="teal" dark>
                   <v-toolbar-title class="title" justify="center"> Choose disponibilities for your event</v-toolbar-title>
 
                   <v-tooltip right>
@@ -104,7 +104,7 @@
                   </v-tooltip>
                 </v-toolbar>
             <!-- date picker -->
-            <div align="center" class="picker ">
+            <div align="center" class="picker ma-4 pb-4">
       
               <div v-if="!dateIsChosen" align="center" class="error">
                 <p class="ma-0">
@@ -121,7 +121,7 @@
                 popover-visibility="focus"
                 color="teal"
                 @dayclick="dayClicked"
-                :rules="datesRules"
+                :rules="validateDate"
                 :columns="$screens({ default: 1, lg: 2 })"
                 :rows="$screens({ default: 1, lg: 2 })"
                 is-dark
@@ -145,38 +145,18 @@
 <script>
 import axios from "axios";
 import TitleVue from "../components/Title.vue";
+import {TitleButtonMixin}  from "../mixins/TitleButtonMixin";
 
 export default {
+  mixins : [TitleButtonMixin],
   data: () => ({
     valid: true,
     dateIsChosen: true,
-    name: "",
-    nameRules: [
-      v => !!v || "Name is required",
-      v => (v && v.length <= 20) || "Name must be less than 10 characters",
-      v => (v && v.length >= 2) || "Name must contain more than 2 characters"
-    ],
-    dates: [],
+    denominateur : 4,
     selectedDays: [],
     selectedOpportunity: [],
-    availableDates: [],
-    title: "",
-    titleRules: [
-      v => !!v || "Title is required",
-      v => (v && v.length <= 20) || "Title must be less than 20 characters",
-      v => (v && v.length >= 2) || "Title must contain more than 2 characters"
-    ],
-
-    datesRules: [v => !!v || "dates is required"],
-
-    rules: {
-      required: value => !!value || "Required.",
-      counter: value => value.length <= 20 || "Max 20 characters",
-      email: value => {
-        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(value) || "Invalid e-mail.";
-      }
-    }
+    availableDates: []
+   
   }),
   components: {
     TitleVue
@@ -199,7 +179,10 @@ export default {
     },
     createData: vm => ({
       title: vm.title,
-      author: vm.name,
+      author: {
+        "name" : vm.name,
+        "email" : vm.email
+      },
       opportunities: vm.selectedDays
     }),
     async validate() {
@@ -303,28 +286,10 @@ export default {
 .hours{
   max-width: 250px;
 }
-
-.pulse-button {
-  position: relative;
-
-  border: none;
-  box-shadow: 0 0 0 0 lightyellow;
-  background-color: black;
-  background-size: cover;
-  background-repeat: no-repeat;
-  z-index: 10;
-  cursor: pointer;
-  -webkit-animation: pulse 1.25s infinite cubic-bezier(0.33, 0, 0, 1);
-  -moz-animation: pulse 1.25s infinite cubic-bezier(0.33, 0, 0, 1);
-  -ms-animation: pulse 1.25s infinite cubic-bezier(0.33, 0, 0, 1);
-  animation: pulse 1.25s infinite cubic-bezier(0.33, 0, 0, 1);
+.head{
+  background :  linear-gradient(to right ,#051422,#075D63)
 }
-.pulse-button:hover {
-  -webkit-animation: none;
-  -moz-animation: none;
-  -ms-animation: none;
-  animation: none;
-}
+
 .popover {
   color: red;
 }

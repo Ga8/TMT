@@ -57,70 +57,72 @@ body {
 }
 
 .dot {
-  border: 1px;
+  border: 0,5px;
   border-radius: 50%;
+  border : solid;
+  border-color: #808080;
   padding: 5px;
   background-size: 200% 200%;
 }
 .dot-10 {
-  background-image: linear-gradient(to top, rgb(65,184,131) 50%, transparent 50%);
+  background-image: linear-gradient(to top, orange 50%, transparent 50%);
   background-position: 0 10%;
   transition: background-position 3000ms, color 3000ms ease,
     border-color 3000ms ease;
 }
 .dot-20 {
-  background-image: linear-gradient(to top, rgb(65,184,131) 50%, transparent 50%);
+  background-image: linear-gradient(to top, orange 50%, transparent 50%);
   background-position: 0 20%;
   transition: background-position 3000ms, color 3000ms ease,
     border-color 3000ms ease;
 }
 .dot-30 {
-  background-image: linear-gradient(to top, rgb(65,184,131) 50%, transparent 50%);
+  background-image: linear-gradient(to top, orange 50%, transparent 50%);
   background-position: 0 30%;
   transition: background-position 3000ms, color 3000ms ease,
     border-color 3000ms ease;
 }
 .dot-40 {
-  background-image: linear-gradient(to top, rgb(65,184,131) 50%, transparent 50%);
+  background-image: linear-gradient(to top, #008081 50%, transparent 50%);
   background-position: 0 40%;
   transition: background-position 3000ms, color 3000ms ease,
     border-color 3000ms ease;
 }
 .dot-50 {
-  background-image: linear-gradient(to top, rgb(65,184,131) 50%, transparent 50%);
+  background-image: linear-gradient(to top, #008081 50%, transparent 50%);
   background-position: 0 50%;
   transition: background-position 3000ms, color 3000ms ease,
     border-color 3000ms ease;
 }
 .dot-60 {
-  background-image: linear-gradient(to top, rgb(65,184,131) 50%, transparent 50%);
+  background-image: linear-gradient(to top, #008081 50%, transparent 50%);
   background-position: 0 60%;
   transition: background-position 3000ms, color 3000ms ease,
     border-color 3000ms ease;
 }
 .dot-70 {
-  background-image: linear-gradient(to top, rgb(65,184,131) 50%, transparent 50%);
+  background-image: linear-gradient(to top, #008081 50%, transparent 50%);
   background-position: 0 70%;
   transition: background-position 3000ms, color 3000ms ease,
     border-color 3000ms ease;
 }
 
 .dot-80{
-  background-image: linear-gradient(to top, rgb(65,184,131) 51%, transparent 50%);
+  background-image: linear-gradient(to top, #008081 51%, transparent 50%);
   background-position: 0 80%;
   transition: background-position 3000, color 3000ms ease,
     border-color 3000ms ease;
 }
 .dot-90 {
-  background-image: linear-gradient(to top, rgb(65,184,131) 50%, transparent 50%);
+  background-image: linear-gradient(to top, #12A570 50%, transparent 50%);
   background-position: 0 90%;
   transition: background-position 3000ms, color 3000ms ease,
     border-color 3000ms ease;
 }
 .dot-100 {
  
-  background-image: linear-gradient(to top, rgb(65,184,131) 50%, transparent 50%);
-  background-position: 0 99%;
+  background-image: linear-gradient(to top, #12A570 50%, transparent 50%);
+  background-position: 0 100%;
   transition: background-position 3000ms, color 3000ms ease,
     border-color 3000ms ease;
 }
@@ -131,10 +133,10 @@ body {
 
 @keyframes pulse { 
   0%{
-    box-shadow:inset 0 0 25px white, 0px 0px 0 0px #121212, 0px 0px 0 2px  white;
+    box-shadow:inset 0 0 25px lightgrey, 0px 0px 0 0px #121212, 0px 0px 0 0px  #121212;
     opacity :1;
   }100%{
-    box-shadow: inset 0 0 25px white, 0px 0px 0 0px #121212, 0px 0px  80px red;
+    box-shadow: inset 0 0 25px lightgrey, 0px 0px 0 0px #121212, 0px 0px  80px rgb(3,252,129);
     opacity :1;
   }
 }
@@ -147,7 +149,7 @@ body {
 }
 
 .headshot {
-  box-shadow: inset 0 0 25px white, 0 0 105px hsl(174, 100%, 29%);
+  box-shadow: inset 0 0 25px lightgrey, 0 0 105px hsl(174, 100%, 29%);
   padding: 45px;
   max-width: 400px;
   margin-left: auto;
@@ -166,7 +168,7 @@ body {
   font-size: 2em;
   margin: 0;
   position: relative;
-  color: white;
+  color: #BFBFBF;
   transform-style: preserve-3d;
   perspective: 400;
   z-index: 1;
