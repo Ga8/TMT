@@ -9,36 +9,39 @@
     </v-row>
     <div v-if="data" class="ma-2">
       <v-row justify="center">
-        <v-col cols="9" md="3" sm="9" class="ma-4">
-           <v-card max-width="800" class="mx-auto">
+    <v-col cols="12" md="3" sm="9" >
+          <h5 class="smoothcolor">Welcome to the event :</h5>
+          <h1 class="margintopneg ">{{title}}</h1>
+          <h5 class="smoothcolor ">created by</h5>
+          <h1 class="margintopneg ">{{author}}</h1>
+    </v-col>  
+     <v-col cols="12" md="3" sm="9" class="ma-4">
+          <h5 class=" smoothcolor">Grant access to this event giving this code :</h5>
+          <v-text-field style="width: 350px"  class="mx-auto" label="Meeting Code" outlined readonly :value="guid" id="meetingid"></v-text-field>
+       
+          <v-btn color=#094E47 class="mb-4 " @click="copy">Copy me</v-btn>
+      </v-col>
+
+      </v-row>
+    </div>
+    <div v-if="data">
+      <v-form ref="form" lazy-validation>
+         <v-card max-width="80%" class="mx-auto">
                   <v-toolbar class="head" color="teal" dark>
-                    <v-toolbar-title class="title">Choose a name an a title for your event</v-toolbar-title>
+                    <v-toolbar-title class="title">New user disponibilities</v-toolbar-title>
                     <v-tooltip right>
                       <template v-slot:activator="{ on, attrs }">
                         <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
                       </template>
                       <span>
-                        The name and the title
-                        <br />are required
+                        If you didn't vote for the event date yet,
+                        <br /> click on your disponibilities days
+                        <br /> and indicate your name.
+                        <br /> Then submit.
                       </span>
                     </v-tooltip>
                     <v-spacer></v-spacer>
                   </v-toolbar>
-          <h5 class="smoothcolor">Welcome to the event :</h5>
-          <h1 class="margintopneg">{{title}}</h1>
-          <h5 class="smoothcolor">created by</h5>
-          <h1 class="margintopneg">{{author}}</h1>
-           </v-card>
-        </v-col>
-        <v-col cols="9" md="3" sm="9" class="ma-4">
-          <h5 class="mb-4 smoothcolor">Grant access to this event giving this code :</h5>
-          <v-textarea label="Meeting Code" outlined readonly rows="1" :value="guid" id="meetingid"></v-textarea>
-          <v-btn @click="copy">Copy me</v-btn>
-        </v-col>
-      </v-row>
-    </div>
-    <div v-if="data">
-      <v-form ref="form" lazy-validation>
         <v-row justify="space-around">
           <v-col cols="12" md="7" sm="12" class="ma-4 border">
             <h5 class="mb-4 smoothcolor">Choose yours disponibilities (max : 5)</h5>
@@ -111,6 +114,7 @@
             </v-expansion-panels>
           </v-col>
         </v-row>
+         </v-card>
       </v-form>
     </div>
     <div v-if="error">
@@ -370,5 +374,9 @@ export default {
 }
 .head{
   background :  linear-gradient(to right , #095049, #101F1D)
+}
+.code{
+  width: 330px;
+
 }
 </style>
