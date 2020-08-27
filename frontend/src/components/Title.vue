@@ -1,18 +1,12 @@
 <template>
   <v-container class="mb-10">
-    <v-btn :disabled="percentage > 98" v-on:click="$emit(event)" class="invisible">
-      <div
-        class="headshot headshot-1 dot "
-          v-bind:class="classObject" >
-
+    <v-btn :disabled="percentage < 98" class="invisible">
+      <div class="headshot headshot-1 dot" v-bind:class="classObject">
         <v-row justify="space-around">
-         
           <span class="letter">{{title}}</span>
-        
         </v-row>
       </div>
     </v-btn>
-  
   </v-container>
 </template>
 <script>
@@ -22,33 +16,37 @@ export default {
   name: "TitleVue",
   props: {
     title: String,
-    numerateur : Number,
-    denominateur : Number
+    numerateur: Number,
+    denominateur: Number
   },
   data: () => ({
-  
+
   }),
   computed: {
-    percentage : function ()
-    {
+    percentage: function() {
       console.log(this.numerateur / this.denominateur);
-       return 100*(this.numerateur / this.denominateur ); 
+      return 100 * (this.numerateur / this.denominateur);
     },
 
-    classObject : function (){
-    var result =  10*Math.floor(this.percentage/10);
-    if (result >= 80 ){
-      result = result + " pulse"
+    classObject: function() {
+      var result = 10 * Math.floor(this.percentage / 10);
+      if (result >= 80) {
+        result = result + " pulse";
+      }
+      console.log("dot-" + result);
+      return "dot-" + result;
     }
-    console.log("dot-"+   result)
-      return "dot-"+   result;
-    }
-    
   },
 
   methods: {
- 
-}};
+    //  emit: function () {
+    //   if (this.percentage == 100) {
+    //     this.$emit('select');
+    //   }
+    //}
+    
+  }
+};
 </script>
 <style scoped>
 @import url(https://fonts.googleapis.com/css?family=Lato:900);
@@ -57,10 +55,10 @@ body {
 }
 
 .dot {
-  border: 0,5px;
+  border: 0, 5px;
 
   border-radius: 50%;
-  border : solid;
+  border: solid;
   border-color: #808080;
   padding: 5px;
   background-size: 200% 200%;
@@ -108,37 +106,38 @@ body {
     border-color 3000ms ease;
 }
 
-.dot-80{
+.dot-80 {
   background-image: linear-gradient(to top, #008081 51%, transparent 50%);
   background-position: 0 80%;
   transition: background-position 3000, color 3000ms ease,
     border-color 3000ms ease;
 }
 .dot-90 {
-  background-image: linear-gradient(to top, #12A570 50%, transparent 50%);
+  background-image: linear-gradient(to top, #12a570 50%, transparent 50%);
   background-position: 0 90%;
   transition: background-position 3000ms, color 3000ms ease,
     border-color 3000ms ease;
 }
 .dot-100 {
- 
-  background-image: linear-gradient(to top, #12A570 50%, transparent 50%);
+  background-image: linear-gradient(to top, #12a570 50%, transparent 50%);
   background-position: 0 100%;
   transition: background-position 3000ms, color 3000ms ease,
     border-color 3000ms ease;
 }
-.pulse{
+.pulse {
   animation: pulse 0.65s infinite cubic-bezier(0.66, 0, 0, 1) alternate;
 }
 
-
-@keyframes pulse { 
-  0%{
-    box-shadow:inset 0 0 25px lightgrey, 0px 0px 0 0px #121212, 0px 0px 0 0px  #121212;
-    opacity :1;
-  }100%{
-    box-shadow: inset 0 0 25px lightgrey, 0px 0px 0 0px #121212, 0px 0px  80px rgb(3,252,129);
-    opacity :1;
+@keyframes pulse {
+  0% {
+    box-shadow: inset 0 0 25px lightgrey, 0px 0px 0 0px #121212,
+      0px 0px 0 0px #121212;
+    opacity: 1;
+  }
+  100% {
+    box-shadow: inset 0 0 25px lightgrey, 0px 0px 0 0px #121212,
+      0px 0px 80px rgb(3, 252, 129);
+    opacity: 1;
   }
 }
 
@@ -169,7 +168,7 @@ body {
   font-size: 2em;
   margin: 0;
   position: relative;
-  color: #BFBFBF;
+  color: #bfbfbf;
   z-index: 1;
 }
 .invisible {

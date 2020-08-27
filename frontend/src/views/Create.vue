@@ -1,10 +1,10 @@
 <template>
   <v-flex>
-        <TitleVue title="CREATE AN EVENT"  @event="validate" :numerateur="numerateur" :denominateur="denominateur" />
     <v-container fluid>
       <v-form ref="form" lazy-validation>
 
         <v-row justify="space-around">
+        <TitleVue title="CREATE AN EVENT"  @click.native="validate" :numerateur="numerateur" :denominateur="denominateur" />
 
           <!-- first  box -->
           <v-col sm="12" md="4">
@@ -184,9 +184,9 @@ export default {
       opportunities: vm.selectedDays
     }),
     async validate() {
-      console.log('1111111111111');
+
       if (this.$refs.form.validate() && this.selectedDays.length != 0) {
-        console.log('2222222222222');
+
         await this.addMeeting(this.createData(this));
       } else {
         this.valid = false;
@@ -244,6 +244,8 @@ export default {
   align-content: center;
   align-self: center;
   text-align: center;
+  color: white;
+  opacity: 87%;
 }
 .maxwidth {
   max-width: 400px;
@@ -287,7 +289,7 @@ export default {
   max-width: 250px;
 }
 .head{
-  background :  linear-gradient(to right ,#075D63, #051422)
+  background :  linear-gradient(to right , #095049, #101F1D)
 }
 
 .popover {

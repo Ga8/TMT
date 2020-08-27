@@ -22,7 +22,7 @@ import com.take.my.time.services.EmailService;
 import com.take.my.time.services.MeetingService;
 
 @RestController
-@RequestMapping("api/")
+@RequestMapping("/api")
 public class MeetingControler {
 
   private MeetingService meetingService;

@@ -16,7 +16,7 @@ export const router = new VueRouter({
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/home',
+    path: '/',
     name: 'home',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

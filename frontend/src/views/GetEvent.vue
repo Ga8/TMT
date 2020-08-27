@@ -10,10 +10,25 @@
     <div v-if="data" class="ma-2">
       <v-row justify="center">
         <v-col cols="9" md="3" sm="9" class="ma-4">
+           <v-card max-width="800" class="mx-auto">
+                  <v-toolbar class="head" color="teal" dark>
+                    <v-toolbar-title class="title">Choose a name an a title for your event</v-toolbar-title>
+                    <v-tooltip right>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
+                      </template>
+                      <span>
+                        The name and the title
+                        <br />are required
+                      </span>
+                    </v-tooltip>
+                    <v-spacer></v-spacer>
+                  </v-toolbar>
           <h5 class="smoothcolor">Welcome to the event :</h5>
           <h1 class="margintopneg">{{title}}</h1>
           <h5 class="smoothcolor">created by</h5>
           <h1 class="margintopneg">{{author}}</h1>
+           </v-card>
         </v-col>
         <v-col cols="9" md="3" sm="9" class="ma-4">
           <h5 class="mb-4 smoothcolor">Grant access to this event giving this code :</h5>
@@ -352,5 +367,8 @@ export default {
 .marginZero{
   margin: 0;
   text-align: left;
+}
+.head{
+  background :  linear-gradient(to right , #095049, #101F1D)
 }
 </style>
