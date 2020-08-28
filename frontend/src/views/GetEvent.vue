@@ -2,9 +2,7 @@
   <v-container class="loadContainer">
     <v-row justify="center">
       <v-col cols="6" md="6">
-        <div class="d-flex justify-center" v-if="loading">
-          <v-progress-circular indeterminate color="teal" width="10" size="400">WAIT</v-progress-circular>
-        </div>
+      <loadingVue text="Loading" :loading=loading />
       </v-col>
     </v-row>
     <div v-if="data" class="ma-2">
@@ -16,7 +14,7 @@
           <h1 class="margintopneg ">{{author}}</h1>
     </v-col>  
      <v-col cols="12" md="3" sm="9" class="ma-4">
-          <h5 class=" smoothcolor">Grant access to this event giving this code :</h5>
+          <h5 class=" smoothcolor">Grant access to this event giving this code to yours guests:</h5>
           <v-text-field style="width: 350px"  class="mx-auto" label="Meeting Code" outlined readonly :value="guid" id="meetingid"></v-text-field>
        
           <v-btn color=#094E47 class="mb-4 " @click="copy">Copy me</v-btn>
@@ -125,9 +123,12 @@
 <script>
 import { mapActions } from "vuex";
 import axios from "axios";
+import LoadingVue from "../components/Loading.vue"
 
 export default {
   async created() {
+    this.loading = true;
+    this.data= false;
     console.log("created called.");
 
     this.guid = this.$route.params.guid;
@@ -158,6 +159,8 @@ export default {
       this.loading = true;
       this.error = false;
     }
+  },components : {
+    LoadingVue
   },
   data: () => ({
     author: "",
@@ -300,6 +303,7 @@ export default {
 };
 </script>
 <style scoped>
+@import url(https://fonts.googleapis.com/css?family=Merienda+One);
 .loadContainer {
   justify-content: center;
 }
@@ -313,7 +317,9 @@ export default {
   min-width: 380px;
 }
 .smoothcolor {
-  color: teal;
+  color: #4fc08d;
+  font-family: 'Merienda one';
+  font-size: 1.4em
 }
 .green {
   background-color: #4fc08d;

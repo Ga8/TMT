@@ -1,56 +1,15 @@
 <template>
   <v-flex>
-    <TitleVue title="WELCOME" @click.native="test" :numerateur="numerateur" :denominateur="denominateur" />
-    <v-card max-width="800" class="mx-auto mt-10">
-      <v-toolbar color=#4DBA87 class="head" dark>
-        <v-toolbar-title class="title">Choose a name an a title for your event</v-toolbar-title>
-        <v-tooltip right>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
-          </template>
-          <span>
-            The name and the title
-            <br />are required
-          </span>
-        </v-tooltip>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-      <!-- <v-text-field
-        label="Title"
-        v-model="title"
-        :counter="20"
-        :rules="[validateTitle]"
-        required
-        outlined
-        class="ma-10"
-        maxlength="20"
-      ></v-text-field>
-      <v-text-field
-        v-model="name"
-        :counter="20"
-        :rules="[validateName]"
-        label="Name"
-        required
-        class="ma-10"
-        outlined
-        maxlength="20"
-      ></v-text-field>
-      <v-text-field
-        v-model="email"
-        :rules="[validateEmail]"
-        label="E-mail"
-        class="ma-10"
-        outlined
-        :counter="50"
-        maxlength="50"
-      ></v-text-field> -->
-    </v-card>
+    <loadingVue text="Loading" :loading=loading />
+
   </v-flex>
 </template>
 <script>
-import TitleVue from "../components/Title.vue";
+import LoadingVue from "../components/Loading.vue"
+
 
 export default {
+
   data: () => ({
     email: "",
     emailValid: false,
@@ -59,12 +18,13 @@ export default {
     title: "",
     titleValid : false ,
     numerateur :3,
-    denominateur : 3
-  }),
-  computed: {},
-  components: {
-    TitleVue
+    denominateur : 3,
+    loading :true,
+  }),  components: {
+    LoadingVue
   },
+  computed: {},
+ 
   methods: {
   //   updateCount() {
   //   this.numerateur = 0 ;

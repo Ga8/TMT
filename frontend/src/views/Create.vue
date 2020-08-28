@@ -1,6 +1,12 @@
 <template>
   <v-flex>
     <v-container fluid>
+        <v-row justify="center">
+      <v-col cols="6" md="6">
+       <loadingVue text="Loading" :loading=loading />
+      </v-col>
+    </v-row>
+    <div v-if="data" class="ma-2">
       <v-form ref="form" lazy-validation>
 
         <v-row justify="space-around">
@@ -12,7 +18,7 @@
               <div align="center">
                 <v-card max-width="800" class="mx-auto">
                   <v-toolbar class="head" color="teal" dark>
-                    <v-toolbar-title class="title">Choose a name an a title for your event</v-toolbar-title>
+                    <v-toolbar-title ><span class="title-head">Choose a name and a title for your event</span></v-toolbar-title>
                     <v-tooltip right>
                       <template v-slot:activator="{ on, attrs }">
                         <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
@@ -136,6 +142,7 @@
           </v-col>
         </v-row>
       </v-form>
+    </div>
     </v-container>
   </v-flex>
 </template>
@@ -151,7 +158,9 @@ export default {
     dateIsChosen: true,
     denominateur : 4,
     availableDates: [],
-   dates : []
+   dates : [],
+    loading : false,
+    data : true,
   }),
   components: {
     TitleVue
@@ -197,6 +206,8 @@ export default {
       }
     },
     async addMeeting(meeting) {
+      this.data = false;
+      this.loading = true;
       await axios({
         method: "post",
         url: "/api/addmeeting",
@@ -236,16 +247,19 @@ export default {
 };
 </script>
 <style>
-@import url(https://fonts.googleapis.com/css?family=Lato:900);
-.title {
-  font-family: "Lato", sans-serif;
-  font-size: 400;
+@import url(https://fonts.googleapis.com/css?family=Libre+Baskerville);
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+.title-head {
+  font-family: 'Libre Baskerville', 'Lato', sans-serif;
   justify-content: center;
   align-content: center;
   align-self: center;
   text-align: center;
-  color: white;
+  font-weight: semi-bold;
+  color: #fff;
   opacity: 87%;
+  margin : 14px;
 }
 .maxwidth {
   max-width: 400px;
@@ -262,18 +276,10 @@ export default {
   margin: 2%;
 }
 
-.title {
-  margin: 3%;
-}
-
 .daypicker {
   font-size: 4em;
 }
-.createButton {
-  background-color: #4fc08d !important;
-  font-family: sans-serif;
-  font-weight: bold;
-}
+
 .fill {
   font-family: sans-serif;
   color: rgb(65, 184, 131);
