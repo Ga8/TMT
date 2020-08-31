@@ -14,9 +14,8 @@
           <h1 class="margintopneg ">{{author}}</h1>
     </v-col>  
      <v-col cols="12" md="3" sm="9" class="ma-4">
-          <h5 class=" smoothcolor">Grant access to this event giving this code to yours guests:</h5>
-          <v-text-field style="width: 350px"  class="mx-auto" label="Meeting Code" outlined readonly :value="guid" id="meetingid"></v-text-field>
-       
+          <h5 class="mb-4 smoothcolor">Grant access to this event giving this code to yours guests:</h5>
+          <v-text-field style="width: 350px; margin-bottom: -15px;"  class="mx-auto" label="Meeting Code" outlined readonly :value="guid" id="meetingid"></v-text-field>
           <v-btn color=#094E47 class="mb-4 " @click="copy">Copy me</v-btn>
       </v-col>
 
@@ -26,7 +25,7 @@
       <v-form ref="form" lazy-validation>
          <v-card max-width="80%" class="mx-auto">
                   <v-toolbar class="head" color="teal" dark>
-                    <v-toolbar-title class="title">New user disponibilities</v-toolbar-title>
+                    <v-toolbar-title class="title"><span class="head-title" >New participant informations</span></v-toolbar-title>
                     <v-tooltip right>
                       <template v-slot:activator="{ on, attrs }">
                         <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
@@ -60,7 +59,7 @@
               :rows="$screens({ default: 1, xl: 2 })"
               is-dark
             >
-              <div slot="day-popover" slot-scope="{ day, dayTitle, attributes }">
+              <div slot="day-popover" slot-scope="{  dayTitle, attributes }">
                 <div class="text-center">{{ dayTitle }}</div>
                 <ul v-for="{key, customData} in attributes" :key="key">
                   <li v-for="user in customData" :key="user" class="marginZero"> 
@@ -304,6 +303,7 @@ export default {
 </script>
 <style scoped>
 @import url(https://fonts.googleapis.com/css?family=Merienda+One);
+ 
 .loadContainer {
   justify-content: center;
 }
@@ -379,7 +379,13 @@ export default {
   text-align: left;
 }
 .head{
-  background :  linear-gradient(to right , #095049, #101F1D)
+  background :  linear-gradient(to right , #095049, #101F1D);
+}
+.head-title {
+  font-family: 'Roboto';
+  color: white;
+  opacity: 88%;
+
 }
 .code{
   width: 330px;

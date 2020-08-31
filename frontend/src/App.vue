@@ -6,18 +6,18 @@
       <router-link to="/create">Create</router-link> 
       <router-link to="/getEvent/0">Get Event</router-link> 
       <router-link to="/about">About</router-link> -->
-       <CustomBottomSheetVue />
+       
     </div>
    </v-app>
 </template>
 <script>
-import CustomBottomSheetVue from './components/CustomBottomSheet.vue';
+
 import NavLinkVue from './components/NavLink.vue';
 
 export default {
 	name: 'App',
 	components: {
-		CustomBottomSheetVue, NavLinkVue
+		NavLinkVue
 	}
 }
 </script>

@@ -9,7 +9,7 @@
           </v-list-item-action>
           <v-list-item-content>
             <a>
-              <router-link tag="span" :to="{name: 'home'}">Home</router-link>
+              <router-link tag="span" :to="{name: 'home'}"><span class="title-home" >Home</span></router-link>
             </a>
           </v-list-item-content>
         </v-list-item>
@@ -19,7 +19,7 @@
           </v-list-item-action>
           <v-list-item-content>
             <a>
-              <router-link tag="span" :to="{name: 'create'}">Create an Event</router-link>
+              <router-link tag="span" :to="{name: 'create'}"><span class="title-home" >Create an Event</span></router-link>
             </a>
           </v-list-item-content>
         </v-list-item>
@@ -27,7 +27,7 @@
           <v-list-item-action>
             <v-icon>mdi-calendar-alert</v-icon>
           </v-list-item-action>
-          <v-list-item-content @click="openclose">Get an event</v-list-item-content>
+          <v-list-item-content @click="openclose"><a><span class="title-home" >Get an event</span></a></v-list-item-content>
         </v-list-item>
         <v-list-item>
           <v-list-item-action>
@@ -35,7 +35,7 @@
           </v-list-item-action>
           <v-list-item-content>
             <a>
-              <router-link tag="span" :to="{name: 'about'}">About</router-link>
+              <router-link tag="span" :to="{name: 'about'}"><span class="title-home" >About</span></router-link>
             </a>
           </v-list-item-content>
         </v-list-item>
@@ -44,7 +44,7 @@
 
     <v-app-bar app clipped-left>
       <v-app-bar-nav-icon color="teal" @click.stop="navmenu"></v-app-bar-nav-icon>
-      <v-toolbar-title>Take My Time</v-toolbar-title>
+      <v-toolbar-title><span class="title-home" > Take My Time </span></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon color="teal" @click="openclose">
         <v-icon>mdi-magnify</v-icon>
@@ -59,7 +59,7 @@
 
     <v-bottom-sheet v-model="sheet">
       <v-sheet class="text-center" height="5%" justify="justify-center">
-        <v-btn class="mt-6" color="error" @click="openclose">close</v-btn>
+        <v-btn class="mt-6 button-foot" color="error" @click="openclose">close</v-btn>
         <div class="input">
           <v-text-field
             class="input"
@@ -68,9 +68,10 @@
             outlined
             v-model="code"
             maxlength="50"
+            maxwidth="350px"
           >Put your event code inside</v-text-field>
         </div>
-        <v-btn type="button" class="success ma-2" @click="getEvent">Get the event</v-btn>
+        <v-btn type="button" class="success ma-2 button-foot" @click="getEvent">Get the event</v-btn>
       </v-sheet>
     </v-bottom-sheet>
 
@@ -95,21 +96,19 @@ export default {
   computed: {},
   methods: {
     getEvent() {
-      if (
-        this.code != null &&
-        this.code != "" &&
-        this.$route.params.guid != this.code
-      ) {
-        this.navmenuopen = false;
-
+      if (this.code != null && this.code != "") {
         router
           .push({ name: "getevent", params: { guid: this.code } })
-          .catch(error => console.log(error.message));
+          .catch((error) => console.log(error.message));
 
-        router.go();
         this.sheet = false;
       } else {
-        alert("Put a valid code to retrieve an event.");
+        if (this.$route.params.guid != this.code) {
+          alert(this.$route.params.guid + " : " + this.code);
+          alert("Put a valid code to retrieve an event.");
+        } else {
+          alert("You already on this event");
+        }
       }
     },
     openclose() {
@@ -136,6 +135,9 @@ export default {
 };
 </script>
 <style>
+@import url(https://fonts.googleapis.com/css?family=Merienda+One);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
 a {
   text-decoration: none;
   text-decoration-color: none;
@@ -145,7 +147,9 @@ a {
 li {
   text-decoration: none;
 }
-
+.title-home{
+  font-family: 'Merienda One', sans-serif;
+}
 .card {
   height: 100%;
 }
@@ -157,5 +161,14 @@ li {
 .vuecolor {
   color: teal;
   font-weight: bold;
+}
+.button-foot{
+  
+  font-family: 'Roboto', sans-serif ;
+}
+.input {
+  margin-left: 40%;
+  margin-right: 40%;
+  margin-top: 2%;
 }
 </style>
