@@ -1,6 +1,6 @@
 
 <template>
-  <v-app id="inspire">
+ <div>
     <v-navigation-drawer v-model="navmenuopen" app clipped>
       <v-list dense>
         <v-list-item>
@@ -51,11 +51,7 @@
       </v-btn>
     </v-app-bar>
 
-    <v-content>
-      <v-container class="fill-height" fluid>
-        <router-view />
-      </v-container>
-    </v-content>
+  
 
     <v-bottom-sheet v-model="sheet">
       <v-sheet class="text-center" height="5%" justify="justify-center">
@@ -75,11 +71,8 @@
       </v-sheet>
     </v-bottom-sheet>
 
-    <v-footer app height=30>
-            <div class="footer"> &copy; {{ new Date().getFullYear() }} Made with
-          <v-icon color="teal">mdi-cards-heart</v-icon> by Gaëtan Guibaud</div>
-    </v-footer>
-  </v-app>
+   
+ </div>
 </template>
 <script>
 import { router } from "../router/index";
@@ -153,10 +146,7 @@ li {
 .card {
   height: 100%;
 }
-.footer {
-  right: 10px;
-  position: absolute;
-}
+
 
 .vuecolor {
   color: teal;

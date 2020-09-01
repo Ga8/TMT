@@ -1,13 +1,15 @@
 <template>
       <v-app>
          <NavLinkVue /> 
-    <div id="nav">
-      <!-- <router-link to="/home">Home</router-link> 
-      <router-link to="/create">Create</router-link> 
-      <router-link to="/getEvent/0">Get Event</router-link> 
-      <router-link to="/about">About</router-link> -->
-       
-    </div>
+           <v-content>
+      <v-container class="fill-height" fluid>
+        <router-view />
+      </v-container>
+    </v-content>
+    <v-footer app height=30>
+            <div class="footer"> &copy; {{ new Date().getFullYear() }} Made with
+          <v-icon color="teal">mdi-cards-heart</v-icon> by Gaëtan Guibaud</div>
+    </v-footer>
    </v-app>
 </template>
 <script>
@@ -24,11 +26,11 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+ 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  
 }
 
 #nav {
@@ -42,5 +44,9 @@ export default {
       color: #42b983;
     }
   }
+}
+.footer {
+  right: 10px;
+  position: absolute;
 }
 </style>

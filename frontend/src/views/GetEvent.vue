@@ -7,12 +7,12 @@
     </v-row>
     <div v-if="data" class="ma-2">
       <v-row justify="center">
-    <v-col cols="12" md="3" sm="9" >
+    <v-col cols="12" md="12" sm="12" >
           <h3>Welcome to the event </h3>
   <h1><span class="fontawesome-star star"></span> <span>{{title}}</span> <span class="fontawesome-star star"></span></h1>
 
           <h5 class="smoothcolor secondtitle ">created by</h5>
-          <h2 class="margintopneg ">{{author}}</h2>
+          <h2 class="cool">{{author}}</h2>
     </v-col>  
      <v-col cols="12" md="3" sm="9" class="ma-4">
           <h5 class="mb-4 smoothcolor">Grant access to this event giving this code to yours guests:</h5>
@@ -315,7 +315,7 @@ export default {
   min-width: 380px;
 }
 .smoothcolor {
-  color: #4fc08d;
+  color: #aab41b;
   font-family: 'Merienda one';
   font-size: 1.4em
 }
@@ -422,6 +422,15 @@ h1 {
   text-shadow: 4px 5px #4DBA87, 6px 7px #c6a39a;
   opacity: 87%;
   margin-top: -30px;
+  
+}
+.cool {
+   font-family: "Oswald", Sans-serif;
+  text-transform: uppercase;
+  font-weight: 200;
+  font-size: 35px;
+  text-shadow: 2px 3px #4DBA87, 3px 4px #c6a39a;
+  opacity: 87%;
   
 }
 

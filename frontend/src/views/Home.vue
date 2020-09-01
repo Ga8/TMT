@@ -1,7 +1,9 @@
 <template>
  <div>
+   <div class="">
     <h3>Welcome to </h3>
   <h1><span class="fontawesome-star star"></span> <span>Take My Time</span> <span class="fontawesome-star star"></span></h1>
+   </div>
      <v-expansion-panels  class="faq">
     <v-expansion-panel>
       <v-expansion-panel-header class="titre impair">What is this website for? </v-expansion-panel-header>
@@ -19,7 +21,7 @@
     >
       <v-expansion-panel-header class="titre pair">Someone give me a code what i must do? </v-expansion-panel-header>
       <v-expansion-panel-content class="content">
-        Person who give you the code is organising an event and he ask to you to give your disponibility to participate to this event.<br />
+        The person who give you the code is organising an event and he ask to you to give your disponibility to participate to this event.<br />
         In order to give your disponibility you can click on <img src="../assets/getEvent.png" width="200px" class= "img " /> or in <img src="../assets/loupe.png" width="60px" class= "img " />
          that you see in the right top corner. 
          <br /> <br />That action must open a  bottom form : <br /> <img src="../assets/bottomForm.jpg"  class= "grandeimg " />  
@@ -78,8 +80,9 @@ export default {
   }),  components: {
  
   },
-  computed: {},
- 
+  computed: {
+
+  },
   methods: {
 
   }
@@ -153,7 +156,8 @@ h1 {
   font-weight: 400;
   font-size: 70px;
   text-shadow: 4px 5px #4DBA87, 6px 7px #c6a39a;
-  opacity: 87%
+  opacity: 87%;
+  margin-bottom: 100px;
 }
 
 h1 span {
@@ -174,7 +178,7 @@ h3 {
   margin-bottom: 10px;  
   position: relative;
   opacity: 87%;
-   margin-top : 50px;
+  margin-top:-155px;
 }
 
 h3:before, h3:after {
