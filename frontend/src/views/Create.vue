@@ -3,7 +3,7 @@
     <v-container fluid>
         <v-row justify="center">
       <v-col cols="6" md="6">
-       <loadingVue text="Loading" :loading=loading />
+       <LoadingVue text="Loading" :loading=loading />
       </v-col>
     </v-row>
     <div v-if="data" class="ma-2">
@@ -13,7 +13,7 @@
         <TitleVue title="CREATE AN EVENT"  @click.native="validate" :numerateur="numerateur" :denominateur="denominateur" />
 
           <!-- first  box -->
-          <v-col sm="12" md="4">
+          <v-col sm="12" md="5">
             <div class="ma-3">
               <div align="center">
                 <v-card max-width="800" class="mx-auto">
@@ -65,7 +65,9 @@
               <!-- optional hours card -->
               <v-card max-width="800" class="mx-auto mt-8">
                 <v-toolbar  class="head" color="teal" dark>
-                  <v-toolbar-title class="title" justify="center"> Hours for selected days</v-toolbar-title>
+                  <v-toolbar-title class="title-head" justify="center">
+                    <span class="title-head"> Hours for selected days</span>
+                    </v-toolbar-title>
 
                   <v-tooltip right>
                     <template v-slot:activator="{ on, attrs }">
@@ -92,10 +94,10 @@
               </v-card>
             </div>
           </v-col>
-          <v-col sm="12" md="6" >
+          <v-col sm="12" md="5" >
                 <v-card max-width="800" class="mx-auto mt-4">
                 <v-toolbar class="head" color="teal" dark>
-                  <v-toolbar-title class="title" justify="center"> Choose disponibilities for your event</v-toolbar-title>
+                  <v-toolbar-title  justify="center"> <span class="title-head" >Choose disponibilities for your event</span></v-toolbar-title>
 
                   <v-tooltip right>
                     <template v-slot:activator="{ on, attrs }">
@@ -149,6 +151,7 @@
 <script>
 import axios from "axios";
 import TitleVue from "../components/Title.vue";
+import LoadingVue from "../components/Loading.vue"
 import {TitleButtonMixin}  from "../mixins/TitleButtonMixin";
 
 export default {
@@ -163,7 +166,7 @@ export default {
     data : true,
   }),
   components: {
-    TitleVue
+    TitleVue,LoadingVue
   },
   computed: {
     // ...mapState(["title"]),
@@ -248,17 +251,18 @@ export default {
 </script>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Libre+Baskerville);
-@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 
 .title-head {
-  font-family: 'Libre Baskerville', 'Lato', sans-serif;
+  font-family: 'Roboto';
   justify-content: center;
   align-content: center;
   align-self: center;
   text-align: center;
-  font-weight: semi-bold;
+  font-weight: bold;
   color: #fff;
-  opacity: 87%;
+  font-size: 1.2em;
+  opacity: 88%;
   margin : 14px;
 }
 .maxwidth {
