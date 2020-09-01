@@ -1,109 +1,83 @@
 <template>
   <v-flex>
-    <loadingVue text="Loading" :loading=loading />
+     <v-expansion-panels focusable>
+    <v-expansion-panel
+    >
+      <v-expansion-panel-header>What is this website for? </v-expansion-panel-header>
+      <v-expansion-panel-content><span>
+        This site is a simple and quick way to create an appointment when you don't know guest disponibility. <br />
+        For exemple you need to organise a party and you want to know where your guest can be there,  <br />
+        you create an event, send the code event to your guest and you'll choose the final date foir your party  <br />
+        knowing the disponibility of your guest.  </span>
+
+
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+    <v-expansion-panel
+    >
+      <v-expansion-panel-header>Someone give me a code what i must do? </v-expansion-panel-header>
+      <v-expansion-panel-content>
+      <span>
+        Person who give you the code is organising an event and he ask to you to give your disponibility to participate to this event.<br />
+        In order to give your disponibility you can click on "get an event" or in <v-img src="../assets/alice-cat.jpg" position="bottom" width="60px" class= "ma-2 " /> <br />
+    
+     </span>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+    <v-expansion-panel
+    >
+      <v-expansion-panel-header>What is this website for? </v-expansion-panel-header>
+      <v-expansion-panel-content><span>
+        This site is a simple and quick way to create an appointment when you don't know guest disponibility. <br />
+        For exemple you need to organise a party and you want to know where your guest can be there, <br />
+        you create an event, send the code event to your guest and you'll choose the final date foir your party <br />
+         knowing the disponibility of your guest.  </span>
+
+
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+    <v-expansion-panel
+    >
+      <v-expansion-panel-header>What is this website for? </v-expansion-panel-header>
+      <v-expansion-panel-content><span>
+        This site is a simple and quick way to create an appointment when you don't know guest disponibility. <br />
+        For exemple you need to organise a party and you want to know where your guest can be there, <br />
+        you create an event, send the code event to your guest and you'll choose the final date foir your party <br />
+         knowing the disponibility of your guest.  </span>
+
+
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+    <v-expansion-panel
+    >
+      <v-expansion-panel-header>What is this website for? </v-expansion-panel-header>
+      <v-expansion-panel-content><span>
+        This site is a simple and quick way to create an appointment when you don't know guest disponibility. <br />
+        For exemple you need to organise a party and you want to know where your guest can be there, <br />
+        you create an event, send the code event to your guest and you'll choose the final date foir your party <br />
+         knowing the disponibility of your guest.  </span>
+
+
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </v-expansion-panels>
 
   </v-flex>
 </template>
 <script>
-import LoadingVue from "../components/Loading.vue"
 
 
 export default {
 
   data: () => ({
-    email: "",
-    emailValid: false,
-    name: "",
-    nameValid : false,
-    title: "",
-    titleValid : false ,
-    numerateur :3,
-    denominateur : 3,
-    loading :true,
+  
   }),  components: {
-    LoadingVue
+ 
   },
   computed: {},
  
   methods: {
-  //   updateCount() {
-  //   this.numerateur = 0 ;
-  //     var arr = [this.emailValid, this.titleValid, this.nameValid];
-  //     arr.forEach((value) =>{
-  //       if (value ){
-  //         this.numerateur++;
-  //       } 
-  //     }
-  //     );
-  //   },
-  //   validateTitle() {
-  //     this.titleValid =  false;
-  //     var result =  this.required(this.title);
-  //     if (result===true) {
-  //        result = this.counter(this.title);
-  //       if ( result===true) {
-  //       result = this.counterMin(this.title); 
-  //         if (result ===true) {
-  //           this.titleValid =  true;
-  //         }
-  //     }
-  //     }
-  //     this.updateCount();
-  //     return result;   
-  //     }
-  //   ,
-  //   validateName() {
-  //      this.nameValid =  false;
-  //     var result =  this.required(this.name);
-  //      console.log(result);
-  //     if (result === true) {
-  //        console.log(result);
-  //        result = this.counter(this.name);
-  //     if (result ===true) {
-  //        console.log(result);
-  //        result = this.counterMin(this.name);
-  //        if (result ===true ){
-  //       this.nameValid =  true;
-  //       }
-  //       }
-  //     }
-  //       console.log(result);
-  //       console.log("name : " +this.name)
-  //       console.log("counter : " + this.counterMin(this.name))
-  //      this.updateCount();
-  //     return result;
-      
-  //     }
-  //   ,
-  //   validateEmail() {
-  //     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  //     var result = "Invalid e-mail.";
-  //      this.emailValid = false;
-  //     result =  this.required(this.email);
-  //     if (result ===true ) {
-  //       result =  pattern.test(this.email)
-
-  //       if (result === true){
-  //       this.emailValid = true ;
-       
-  //      }
-  //     }
-  //      this.updateCount();
-  //     return result;
-  //   },
-  //   required(value) {
-  //     return !!value || "Required.";
-  //   },
-  //   counter( value) {
-  //    return value.length <= 20 || "Max 20 characters"
-  //    },
-  //   counterMin( value) {
-  //    return value.length > 2 || "Min 2 characters"
-  //    }
-  // },
-  test : function () {
-  console.log("TESSSSSSSSSSSSSSSSSSSST")
-  }}
+  }
 };
 </script>
 <style scoped>
