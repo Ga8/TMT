@@ -8,10 +8,11 @@
     <div v-if="data" class="ma-2">
       <v-row justify="center">
     <v-col cols="12" md="3" sm="9" >
-          <h5 class="smoothcolor">Welcome to the event :</h5>
-          <h1 class="margintopneg ">{{title}}</h1>
-          <h5 class="smoothcolor ">created by</h5>
-          <h1 class="margintopneg ">{{author}}</h1>
+          <h3>Welcome to the event </h3>
+  <h1><span class="fontawesome-star star"></span> <span>{{title}}</span> <span class="fontawesome-star star"></span></h1>
+
+          <h5 class="smoothcolor secondtitle ">created by</h5>
+          <h2 class="margintopneg ">{{author}}</h2>
     </v-col>  
      <v-col cols="12" md="3" sm="9" class="ma-4">
           <h5 class="mb-4 smoothcolor">Grant access to this event giving this code to yours guests:</h5>
@@ -188,11 +189,6 @@ export default {
     selectedOpportunity: [],
     availableDates: [],
     title: "",
-    titleRules: [
-      v => !!v || "Title is required",
-      v => (v && v.length <= 20) || "Title must be less than 20 characters",
-      v => (v && v.length >= 2) || "Title must contain more than 2 characters"
-    ],
     datesRules: [v => !!v || "dates is required"]
   }),
   computed: {
@@ -303,6 +299,8 @@ export default {
 </script>
 <style scoped>
 @import url(https://fonts.googleapis.com/css?family=Merienda+One);
+@import url(https://fonts.googleapis.com/css?family=Oswald:400|Open+Sans:700);
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
  
 .loadContainer {
   justify-content: center;
@@ -390,5 +388,81 @@ export default {
 .code{
   width: 330px;
 
+}
+
+/* fontawesome */
+[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+
+
+section.text {
+  position: absolute;
+  width: 100%;
+  min-width: 800px;
+  text-align: center;
+  top: 50%;
+  margin-top: -55px;
+  
+}
+
+h1, h3 {
+  transform: matrix(1, -0.20, 0, 1, 0, 0);
+  -ms-transform: matrix(1, -0.20, 0, 1, 0, 0);
+  -webkit-transform: matrix(1, -0.20, 0, 1, 0, 0);
+  margin-bottom: 150px;
+  margin-right: 100px;
+}
+
+h1 {
+  font-family: "Oswald", Sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 70px;
+  text-shadow: 4px 5px #4DBA87, 6px 7px #c6a39a;
+  opacity: 87%;
+  margin-top: -30px;
+  
+}
+
+h1 span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+span.star {
+  font-size: 20px;
+}
+
+h3 {
+  font-family: "Open Sans", Sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;  
+  position: relative;
+  opacity: 87%
+}
+
+h3:before, h3:after {
+  content: " ";
+  position: absolute;
+  width: 100px;
+  height: 8px;
+  border-top: 2px solid #4DBA87;
+  border-bottom: 2px solid rgb(39, 117, 108);
+}
+
+h3:before {
+  margin: 5px 0 0 -110px;
+}
+
+h3:after {
+  margin: 5px 0 0 10px;
+}
+
+.secondtitle{
+margin-top: -100px;
 }
 </style>

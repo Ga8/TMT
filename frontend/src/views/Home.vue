@@ -135,7 +135,7 @@ section.text {
   min-width: 800px;
   text-align: center;
   top: 50%;
-  margin-top: -55px;
+ 
   
 }
 
@@ -143,7 +143,8 @@ h1, h3 {
   transform: matrix(1, -0.20, 0, 1, 0, 0);
   -ms-transform: matrix(1, -0.20, 0, 1, 0, 0);
   -webkit-transform: matrix(1, -0.20, 0, 1, 0, 0);
-  margin-bottom: 150px;
+  margin-bottom: 80px;
+ 
 }
 
 h1 {
@@ -172,7 +173,8 @@ h3 {
   letter-spacing: 0.1em;
   margin-bottom: 10px;  
   position: relative;
-  opacity: 87%
+  opacity: 87%;
+   margin-top : 50px;
 }
 
 h3:before, h3:after {
