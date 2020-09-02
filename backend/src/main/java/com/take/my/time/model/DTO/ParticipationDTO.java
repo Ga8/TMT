@@ -10,6 +10,8 @@ public class ParticipationDTO implements Serializable {
   private String guid;
 
   private String name;
+  
+  private String email;
 
   private List<OpportunityDTOInput> opportunities;
 
@@ -41,6 +43,16 @@ public class ParticipationDTO implements Serializable {
   public void setName(String name) {
     this.name = name;
   }
+
+public String getEmail() {
+	return email;
+}
+
+public void setEmail(String email) {
+	this.email = email;
+}
+  
+  
 
 
 

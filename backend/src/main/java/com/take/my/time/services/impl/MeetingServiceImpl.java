@@ -95,7 +95,7 @@ public class MeetingServiceImpl implements MeetingService {
         Meeting oldMeeting = optionalMeeting.get();
 
         User user = new User(updateDTO.getName());
-
+        user.setEmail(updateDTO.getEmail());
         // si on a déjà le user avec le meme nom on ecrase fallait faire gaffe + penser a ajouter
         // les user cotés ihm pour voir qui a voté sinon on peut ecraser sans faire exprès
         if (oldMeeting.getUsers().stream().map(User::getName).collect(Collectors.toList())
@@ -140,7 +140,7 @@ public class MeetingServiceImpl implements MeetingService {
       meetingDto = objectMapper.readValue(pMeeting, MeetingDTO.class);
 
       User user = new User(meetingDto.getAuthor().getName());
-
+      
       meeting.getUsers().add(user);
       meeting.setAuthor(meetingDto.getAuthor());
       meeting.setTitle(meetingDto.getTitle());
