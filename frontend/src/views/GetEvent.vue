@@ -2,118 +2,184 @@
   <v-container class="loadContainer">
     <v-row justify="center">
       <v-col cols="6" md="6">
-      <loadingVue text="Loading" :loading=loading />
+        <loadingVue text="Loading" :loading="loading" />
       </v-col>
     </v-row>
+
+    <!-- titre -->
     <div v-if="data" class="ma-2">
       <v-row justify="center">
-    <v-col cols="12" md="12" sm="12" >
-          <h3>Welcome to the event </h3>
-  <h1><span class="fontawesome-star star"></span> <span>{{title}}</span> <span class="fontawesome-star star"></span></h1>
+        <v-col cols="12" md="12" sm="12">
+          <h3>Welcome to the event</h3>
+          <h1>
+            <span class="fontawesome-star star"></span>
+            <span>{{title}}</span>
+            <span class="fontawesome-star star"></span>
+          </h1>
 
-          <h5 class="smoothcolor secondtitle ">created by</h5>
+          <h5 class="smoothcolor secondtitle">created by</h5>
           <h2 class="cool">{{author}}</h2>
-    </v-col>  
-     <v-col cols="12" md="3" sm="9" class="ma-4">
-          <h5 class="mb-4 smoothcolor">Grant access to this event giving this code to yours guests:</h5>
-          <v-text-field style="width: 350px; margin-bottom: -15px;"  class="mx-auto" label="Meeting Code" outlined readonly :value="guid" id="meetingid"></v-text-field>
-          <v-btn color=#094E47 class="mb-4 " @click="copy">Copy me</v-btn>
-      </v-col>
-
+        </v-col>
       </v-row>
     </div>
+
+    <!-- first brick -->
     <div v-if="data">
       <v-form ref="form" lazy-validation>
-         <v-card max-width="80%" class="mx-auto">
-                  <v-toolbar class="head" color="teal" dark>
-                    <v-toolbar-title class="title"><span class="head-title" >New participant informations</span></v-toolbar-title>
-                    <v-tooltip right>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
-                      </template>
-                      <span>
-                        If you didn't vote for the event date yet,
-                        <br /> click on your disponibilities days
-                        <br /> and indicate your name.
-                        <br /> Then submit.
-                      </span>
-                    </v-tooltip>
+        <v-card max-width="80%" class="mx-auto">
+          <v-toolbar class="head" color="teal" dark>
+            <v-toolbar-title class="title">
+              <span class="head-title">New participant informations</span>
+            </v-toolbar-title>
+            <v-tooltip right>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
+              </template>
+              <span>
+                If you didn't vote for the event date yet,
+                <br />click on your disponibilities days
+                <br />and indicate your name.
+                <br />Then submit.
+              </span>
+            </v-tooltip>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+
+          <!-- dates pickers -->
+          <v-row justify="space-around">
+            <v-col cols="12" md="7" sm="12" class="ma-4 border">
+              <h5 class="mb-4 smoothcolor">Choose yours disponibilities (max : 5)</h5>
+              <p v-if="!dateIsChosen" class="error">Choose at least one date</p>
+
+              <vc-date-picker
+                mode="multiple"
+                is-expanded
+                v-model="dates"
+                :attributes="attributes"
+                is-inline
+                :available-dates="availableDates"
+                popover-visibility="focus"
+                color="teal"
+                @dayclick="dayClicked"
+                :rules="validateDate"
+                :columns="$screens({ default: 1, xl: 2 })"
+                :rows="$screens({ default: 1, xl: 2 })"
+                is-dark
+              >
+                <div slot="day-popover" slot-scope="{  dayTitle, attributes }">
+                  <div class="poptitle">{{ dayTitle }}</div>
+                  <ul v-for="{key, customData} in attributes" :key="key">
+                    <li v-for="user in customData" :key="user" class="marginZero">{{user}}</li>
+                  </ul>
+                </div>
+                <!-- :attributes="attributes" -->
+              </vc-date-picker>
+              <p v-if="!dateIsChosen" class="error">Choose at least one date</p>
+            </v-col>
+            <v-col cols="12" sm="12" md="3" class="ma-2 border">
+              <!-- Button submit -->
+              <v-progress-circular
+                :rotate="360"
+                :size="300"
+                :width="15"
+                :value="value"
+                color="teal"
+              > <v-btn
+                class="ma-10 pulse-button"
+                color="teal"
+                @click="validate"
+              >Submit my disponibility</v-btn></v-progress-circular>
+
+              
+              <v-divider class="mt-10" horizontal></v-divider>
+              <h5 class="mb-4 smoothcolor">Enter your name</h5>
+              <v-text-field
+                v-model="name"
+                :counter="20"
+                :rules="[validateName]"
+                label="Name"
+                required
+                outlined
+                maxlength="20"
+              ></v-text-field>
+              <h5 class="mb-4 smoothcolor">
+                Enter your email
+                <v-tooltip right>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
+                  </template>
+                  <span>
+                    This email will allow to send you a mail
+                    <br />
+                    when {{author}} will choose the final date for this event
+                  </span>
+                </v-tooltip>
+              </h5>
+              <v-text-field
+                v-model="email"
+                :counter="50"
+                :rules="[validateEmail]"
+                label="Email"
+                required
+                outlined
+                maxlength="50"
+              ></v-text-field>
+
+              <v-divider class="mb-10" horizontal></v-divider>
+
+              <v-expansion-panels fixed="true">
+                <h5 class="ma-4 smoothcolor">Optional hour for selected days</h5>
+                <v-expansion-panel v-for="day in selectedDays" :key="day.date">
+                  <v-expansion-panel-header>
+                    <v-icon>mdi-clock</v-icon>
                     <v-spacer></v-spacer>
-                  </v-toolbar>
-        <v-row justify="space-around">
-          <v-col cols="12" md="7" sm="12" class="ma-4 border">
-            <h5 class="mb-4 smoothcolor">Choose yours disponibilities (max : 5)</h5>
-            <p v-if="!dateIsChosen" class="error">Choose at least one date</p>
-
-            <vc-date-picker
-              mode="multiple"
-              is-expanded
-              v-model="dates"
-              :attributes="attributes"
-              is-inline
-              :available-dates="availableDates"
-              popover-visibility="focus"
-              color="teal"
-              @dayclick="dayClicked"
-              :rules="datesRules"
-              :columns="$screens({ default: 1, xl: 2 })"
-              :rows="$screens({ default: 1, xl: 2 })"
-              is-dark
-            >
-              <div slot="day-popover" slot-scope="{  dayTitle, attributes }">
-                <div class="text-center">{{ dayTitle }}</div>
-                <ul v-for="{key, customData} in attributes" :key="key">
-                  <li v-for="user in customData" :key="user" class="marginZero"> 
-                    
-                   {{user}}  </li>
-                </ul>
-              </div>
-              <!-- :attributes="attributes" -->
-            </vc-date-picker>
-            <p v-if="!dateIsChosen" class="error">Choose at least one date</p>
-          </v-col>
-          <v-col cols="12" sm="12" md="3" class="ma-2 border">
-            <h5 class="mb-4 smoothcolor">Enter your name</h5>
-            <v-text-field
-              v-model="name"
-              :counter="20"
-              :rules="nameRules"
-              label="Name"
-              required
-              outlined
-              maxlength="20"
-            ></v-text-field>
-            <v-divider class="mt-10" horizontal></v-divider>
-
-            <v-btn class="ma-10 pulse-button" color="teal" @click="validate">Submit my disponibility</v-btn>
-            <v-divider class="mb-10" horizontal></v-divider>
-
-            <v-expansion-panels fixed="true">
-              <h5 class="ma-4 smoothcolor">Optional hour for selected days</h5>
-              <v-expansion-panel v-for="day in selectedDays" :key="day.date">
-                <v-expansion-panel-header>
-                  <v-icon>mdi-clock</v-icon>
-                  <v-spacer></v-spacer>
-                  <div class="hour_panel">
-                    <template>{{day.date}}</template>
-                  </div>
-                  <v-spacer></v-spacer>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content class="pa-1">
-                  <v-time-picker
-                    v-model="day.hour"
-                    label="Hours"
-                    format="24hr"
-                    outlined
-                    type="time"
-                  ></v-time-picker>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-col>
-        </v-row>
-         </v-card>
+                    <div class="hour_panel">
+                      <template>{{day.date}}</template>
+                    </div>
+                    <v-spacer></v-spacer>
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content class="pa-1">
+                    <v-time-picker
+                      v-model="day.hour"
+                      label="Hours"
+                      format="24hr"
+                      outlined
+                      type="time"
+                    ></v-time-picker>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </v-col>
+          </v-row>
+        </v-card>
       </v-form>
+      <v-card max-width="80%" class="mx-auto mt-8">
+        <v-toolbar class="head" color="teal" dark>
+          <v-toolbar-title class="title">
+            <span class="head-title">Host resouces</span>
+          </v-toolbar-title>
+          <v-tooltip right>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon v-bind="attrs" v-on="on">mdi-comment-question</v-icon>
+            </template>
+            <span>The admin code allow owner to choose the event date and that send email to guest who advise their email adress.</span>
+          </v-tooltip>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-col cols="12" md="5" sm="9" class="ma-4">
+          <h5 class="mb-4 smoothcolor">Grant access to this event giving this code to yours guests:</h5>
+          <v-text-field
+            style="width: 350px; margin-bottom: -15px;"
+            class="mx-auto"
+            label="Meeting Code"
+            outlined
+            readonly
+            :value="guid"
+            id="meetingid"
+          ></v-text-field>
+          <v-btn color="#094E47" class="mb-4" @click="copy">Copy me</v-btn>
+        </v-col>
+      </v-card>
     </div>
     <div v-if="error">
       <p>{{errorMessage}}</p>
@@ -123,12 +189,12 @@
 <script>
 import { mapActions } from "vuex";
 import axios from "axios";
-import LoadingVue from "../components/Loading.vue"
+import LoadingVue from "../components/Loading.vue";
 
 export default {
   async created() {
     this.loading = true;
-    this.data= false;
+    this.data = false;
     console.log("created called.");
 
     this.guid = this.$route.params.guid;
@@ -159,12 +225,15 @@ export default {
       this.loading = true;
       this.error = false;
     }
-  },components : {
+  },
+  components: {
     LoadingVue
   },
   data: () => ({
     author: "",
+    value: 0,
     rows: 1,
+    email: "",
     full: true,
     autogrow: true,
     loading: false,
@@ -179,19 +248,22 @@ export default {
     valid: false,
     dateIsChosen: true,
     name: "",
-    nameRules: [
-      v => !!v || "Name is required",
-      v => (v && v.length <= 20) || "Name must be less than 10 characters",
-      v => (v && v.length >= 2) || "Name must contain more than 2 characters"
-    ],
     dates: [],
     selectedDays: [],
     selectedOpportunity: [],
     availableDates: [],
     title: "",
-    datesRules: [v => !!v || "dates is required"]
+    emailValid: false,
+    nameValid: false,
+    dateValid: false,
+    numerateur: 0,
+    denominateur: 2,
+
   }),
   computed: {
+    value : function () {
+
+    },
     attributes() {
       if (this.data) {
         return [
@@ -205,7 +277,9 @@ export default {
               label: op.label,
               labelClass: "popover"
             },
-            customData: op.label.split("|")
+            customData: op.label.split("|").filter(function(el) {
+              return el != "";
+            })
           }))
         ];
       } else {
@@ -238,6 +312,7 @@ export default {
           this.addOrDelete(this.selectedDay, false);
         }
         this.availability(day);
+        this.validateDate();
       }
     },
     createData: vm => ({
@@ -293,6 +368,71 @@ export default {
           this.availableDates.push(dday.date);
         }
       }
+    },
+    validateName() {
+      this.nameValid = false;
+      var result = this.required(this.name);
+      console.log(result);
+      if (result === true) {
+        result = this.counter(this.name);
+        if (result === true) {
+          result = this.counterMin(this.name);
+          if (result === true) {
+            this.nameValid = true;
+          }
+        }
+      }
+      this.updateCount();
+      return result;
+    },
+    validateDate() {
+      this.dateValid = false;
+      var result = "dates is required";
+
+      result = this.selectedDays.length != 0;
+
+      if (result === true) {
+
+        this.dateValid = true;
+      }
+      this.updateCount();
+      return result;
+    },
+    validateEmail() {
+      const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var result = "Invalid e-mail.";
+      this.emailValid = false;
+     
+        result = pattern.test(this.email);
+
+        if (result === true) {
+          this.emailValid = true;
+        }
+      
+      this.updateCount();
+      return result;
+    },
+    required(value) {
+      return !!value || "Required.";
+    },
+    counter(value) {
+      return value.length <= 20 || "Max 20 characters";
+    },
+    counterMin(value) {
+      return value.length >= 2 || "Min 2 characters";
+    },
+    updateCount() {
+      this.numerateur = 0;
+      var arr = [
+        this.emailValid,
+        this.nameValid,
+        this.dateValid
+      ];
+      arr.forEach((val) => {
+        if (val) {
+          this.numerateur++;
+        }
+      });
     }
   }
 };
@@ -301,7 +441,7 @@ export default {
 @import url(https://fonts.googleapis.com/css?family=Merienda+One);
 @import url(https://fonts.googleapis.com/css?family=Oswald:400|Open+Sans:700);
 @import url(http://weloveiconfonts.com/api/?family=fontawesome);
- 
+
 .loadContainer {
   justify-content: center;
 }
@@ -316,8 +456,8 @@ export default {
 }
 .smoothcolor {
   color: #aab41b;
-  font-family: 'Merienda one';
-  font-size: 1.4em
+  font-family: "Merienda one";
+  font-size: 1.4em;
 }
 .green {
   background-color: #4fc08d;
@@ -336,7 +476,7 @@ export default {
   background-color: black;
   background-size: cover;
   background-repeat: no-repeat;
-  z-index: 10;
+  z-index: 1;
   cursor: pointer;
   -webkit-animation: pulse 1.25s infinite cubic-bezier(0.33, 0, 0, 1);
   -moz-animation: pulse 1.25s infinite cubic-bezier(0.33, 0, 0, 1);
@@ -350,7 +490,7 @@ export default {
   animation: none;
 }
 .popover {
-  color: red;
+  background-color: red;
 }
 @-webkit-keyframes pulse {
   to {
@@ -372,29 +512,29 @@ export default {
     box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
   }
 }
-.marginZero{
+.marginZero {
   margin: 0;
   text-align: left;
 }
-.head{
-  background :  linear-gradient(to right , #095049, #101F1D);
+.head {
+  background: linear-gradient(to right, #095049, #101f1d);
 }
 .head-title {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   color: white;
   opacity: 88%;
-
 }
-.code{
+.code {
   width: 330px;
-
+}
+.poptitle {
+  color: teal;
 }
 
 /* fontawesome */
 [class*="fontawesome-"]:before {
-  font-family: 'FontAwesome', sans-serif;
+  font-family: "FontAwesome", sans-serif;
 }
-
 
 section.text {
   position: absolute;
@@ -403,13 +543,13 @@ section.text {
   text-align: center;
   top: 50%;
   margin-top: -55px;
-  
 }
 
-h1, h3 {
-  transform: matrix(1, -0.20, 0, 1, 0, 0);
-  -ms-transform: matrix(1, -0.20, 0, 1, 0, 0);
-  -webkit-transform: matrix(1, -0.20, 0, 1, 0, 0);
+h1,
+h3 {
+  transform: matrix(1, -0.2, 0, 1, 0, 0);
+  -ms-transform: matrix(1, -0.2, 0, 1, 0, 0);
+  -webkit-transform: matrix(1, -0.2, 0, 1, 0, 0);
   margin-bottom: 150px;
   margin-right: 100px;
 }
@@ -419,19 +559,17 @@ h1 {
   text-transform: uppercase;
   font-weight: 400;
   font-size: 70px;
-  text-shadow: 4px 5px #4DBA87, 6px 7px #c6a39a;
+  text-shadow: 4px 5px #4dba87, 6px 7px #c6a39a;
   opacity: 87%;
   margin-top: -30px;
-  
 }
 .cool {
-   font-family: "Oswald", Sans-serif;
+  font-family: "Oswald", Sans-serif;
   text-transform: uppercase;
   font-weight: 200;
   font-size: 35px;
-  text-shadow: 2px 3px #4DBA87, 3px 4px #c6a39a;
+  text-shadow: 2px 3px #4dba87, 3px 4px #c6a39a;
   opacity: 87%;
-  
 }
 
 h1 span {
@@ -449,17 +587,18 @@ h3 {
   font-weight: 700;
   font-size: 20px;
   letter-spacing: 0.1em;
-  margin-bottom: 10px;  
+  margin-bottom: 10px;
   position: relative;
-  opacity: 87%
+  opacity: 87%;
 }
 
-h3:before, h3:after {
+h3:before,
+h3:after {
   content: " ";
   position: absolute;
   width: 100px;
   height: 8px;
-  border-top: 2px solid #4DBA87;
+  border-top: 2px solid #4dba87;
   border-bottom: 2px solid rgb(39, 117, 108);
 }
 
@@ -471,7 +610,7 @@ h3:after {
   margin: 5px 0 0 10px;
 }
 
-.secondtitle{
-margin-top: -100px;
+.secondtitle {
+  margin-top: -100px;
 }
 </style>

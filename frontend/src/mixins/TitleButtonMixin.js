@@ -95,7 +95,7 @@ export const TitleButtonMixin = {
       return value.length <= 20 || "Max 20 characters";
     },
     counterMin(value) {
-      return value.length > 2 || "Min 2 characters";
+      return value.length >= 2 || "Min 2 characters";
     },
   },
 };
