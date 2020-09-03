@@ -48,7 +48,7 @@
           <!-- dates pickers -->
           <v-row justify="space-around">
             <v-col cols="12" md="7" sm="12" class="ma-4 border">
-              <h5 class="mb-4 smoothcolor">Choose yours disponibilities (max : 5)</h5>
+              <h4 class="mb-4 head-title">Choose yours disponibilities (max : 5)</h4>
               <p v-if="!dateIsChosen" class="error">Choose at least one date</p>
 
               <vc-date-picker
@@ -75,41 +75,79 @@
                 <!-- :attributes="attributes" -->
               </vc-date-picker>
               <p v-if="!dateIsChosen" class="error">Choose at least one date</p>
+
+              <v-divider class="my-10" horizontal></v-divider>
+
+              <div id="underpickercontainer">
+                <v-col cols="12" md="12" sm="12" class="ma-4 border">
+                  <v-row>
+                    <v-col cols="12" md="5" sm="5" class="ma-4 border">
+                      <h5 class="ma-4 smoothcolor">Percentage of your guest disponibility</h5>
+                      <v-divider horizontal class="ma-2" />
+                      <div class="legend">
+                        <v-chip class="ma-2" color="green" />
+                        <span>over 80%</span>
+                        <br />
+                        <v-chip class="ma-2" color="yellow" />
+                        <span>60%-80%</span>
+                        <br />
+                        <v-chip class="ma-2" color="orange" />
+                        <span>40-60%</span>
+                        <br />
+                        <v-chip class="ma-2" color="red" />
+                        <span>under 40%</span>
+                        <br />
+                      </div>
+                    </v-col>
+                    <v-divider class="my-10" vertical></v-divider>
+                    <v-col cols="12" md="5" sm="5" class="ma-4 border">
+                      <v-expansion-panels fixed="true">
+                        <h5 class="ma-4 smoothcolor">Optional hour for selected days</h5>
+                        <v-expansion-panel v-for="day in selectedDays" :key="day.date">
+                          <v-expansion-panel-header>
+                            <v-icon>mdi-clock</v-icon>
+                            <v-spacer></v-spacer>
+                            <div class="hour_panel">
+                              <template>{{day.date}}</template>
+                            </div>
+                            <v-spacer></v-spacer>
+                          </v-expansion-panel-header>
+                          <v-expansion-panel-content class="pa-1">
+                            <v-dialog
+                              ref="dialog"
+                              v-model="modal2"
+                              width="250px"
+                            >
+                              <template v-slot:activator="{ on }">
+                                <v-text-field
+                                  v-model="day.hour"
+                                  label="CLick to pick an hour"
+                                  readonly
+                                  outlined
+                                  v-on="on"
+                                
+                                ></v-text-field>
+                              </template>
+                              <v-time-picker v-if="modal2" v-model="day.hour"    color="teal" full-width>
+                                <v-spacer></v-spacer>
+                                <v-btn text color="primary" @click="modal2 = false">OK</v-btn>
+                              </v-time-picker>
+                            </v-dialog>
+                          </v-expansion-panel-content>
+                        </v-expansion-panel>
+                      </v-expansion-panels>
+                    </v-col>
+                  </v-row>
+                </v-col>
+              </div>
             </v-col>
             <v-col cols="12" sm="12" md="3" class="ma-2 border">
-              <v-row justify="center">
               <!-- Button submit -->
-              <v-progress-circular
-                :rotate="360"
-                :size="150"
-                :width="15"
-                :value="value"
-                color="teal"
-              > mandatory : <br />{{value*2 / 100}}/2
-              </v-progress-circular>
-              <div class="ma-2"> </div>
-              <v-progress-circular
-                :rotate="360"
-                :size="150"
-                :width="15"
-                :value="value"
-                color="#095049"
-              > 
-              options : <br /> {{options}}/6
-              </v-progress-circular>
 
-              </v-row>
-              <v-btn
-                class="ma-10 pulse-button"
-                color="teal"
-                @click="validate"
-              >Submit my disponibility</v-btn>
-
-              
-              <v-divider class="mt-10" horizontal></v-divider>
               <h5 class="mb-4 smoothcolor">Enter your name</h5>
               <v-text-field
                 v-model="name"
+                class="mx-8"
                 :counter="20"
                 :rules="[validateName]"
                 label="Name"
@@ -133,37 +171,46 @@
               <v-text-field
                 v-model="email"
                 :counter="50"
-                
+                class="mx-8"
                 label="Email"
-                required
                 outlined
                 maxlength="50"
               ></v-text-field>
 
+              <div class="ma-2"></div>
               <v-divider class="mb-10" horizontal></v-divider>
-
-              <v-expansion-panels fixed="true">
-                <h5 class="ma-4 smoothcolor">Optional hour for selected days</h5>
-                <v-expansion-panel v-for="day in selectedDays" :key="day.date">
-                  <v-expansion-panel-header>
-                    <v-icon>mdi-clock</v-icon>
-                    <v-spacer></v-spacer>
-                    <div class="hour_panel">
-                      <template>{{day.date}}</template>
-                    </div>
-                    <v-spacer></v-spacer>
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content class="pa-1">
-                    <v-time-picker
-                      v-model="day.hour"
-                      label="Hours"
-                      format="24hr"
-                      outlined
-                      type="time"
-                    ></v-time-picker>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-              </v-expansion-panels>
+              <v-row justify="center">
+                <v-progress-circular
+                  :rotate="360"
+                  :size="150"
+                  :width="15"
+                  :value="value"
+                  color="teal"
+                >
+                  mandatory :
+                  <br />
+                  {{value*2 / 100}}/2
+                </v-progress-circular>
+                <div class="ma-2"></div>
+                <v-progress-circular
+                  :rotate="360"
+                  :size="150"
+                  :width="15"
+                  :value="value"
+                  color="#095049"
+                >
+                  options :
+                  <br />
+                  {{options}}/6
+                </v-progress-circular>
+              </v-row>
+              <v-btn
+                class="ma-10 pulse-button"
+                color="teal"
+                @click="validate"
+                :disabled="value  < 100"
+                v-bind:class="classObject"
+              >Submit my disponibility</v-btn>
             </v-col>
           </v-row>
         </v-card>
@@ -273,12 +320,12 @@ export default {
     numerateur: 0,
     denominateur: 2,
     options: 0,
-
+    modal2: false
   }),
   computed: {
-   value() {
-    return 100*this.numerateur / this.denominateur;
-   },
+    value() {
+      return (100 * this.numerateur) / this.denominateur;
+    },
     attributes() {
       if (this.data) {
         return [
@@ -408,7 +455,6 @@ export default {
       result = this.selectedDays.length != 0;
 
       if (result === true) {
-
         this.dateValid = true;
       }
       this.updateCount();
@@ -418,13 +464,13 @@ export default {
       const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var result = "Invalid e-mail.";
       this.emailValid = false;
-     
-        result = pattern.test(this.email);
 
-        if (result === true) {
-          this.emailValid = true;
-        }
-      
+      result = pattern.test(this.email);
+
+      if (result === true) {
+        this.emailValid = true;
+      }
+
       return result;
     },
     required(value) {
@@ -438,12 +484,8 @@ export default {
     },
     updateCount() {
       this.numerateur = 0;
-      var arr = [
-        this.emailValid,
-        this.nameValid,
-        this.dateValid
-      ];
-      arr.forEach((val) => {
+      var arr = [this.emailValid, this.nameValid, this.dateValid];
+      arr.forEach(val => {
         if (val) {
           this.numerateur++;
         }
@@ -473,7 +515,7 @@ export default {
   color: #ffffff;
   font-family: "Merienda one";
   font-size: 1.4em;
-  opacity : 60%;
+  opacity: 60%;
 }
 .green {
   background-color: #4fc08d;
@@ -628,10 +670,21 @@ h3:after {
 
 .secondtitle {
   margin-top: -150px;
-  margin-left :210px;
+  margin-left: 210px;
 }
 .author {
   margin-left: 300px;
   margin-bottom: 50px;
+}
+
+/* under date picker*/
+.legend {
+  min-width: 250px;
+  text-align: start;
+  margin-left: 25%;
+}
+.timePicker {
+  width: 125px;
+  height: ;
 }
 </style>

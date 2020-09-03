@@ -67,6 +67,11 @@ public class UserOpportunityHour implements Serializable {
     hour = hour1;
   }
 
+  @Override
+  public String toString() {
+    return "UserOpportunityHour [ user=" + user + ", hour=" + hour + "]";
+  }
+
 
 
 }

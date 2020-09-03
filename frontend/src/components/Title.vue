@@ -1,6 +1,6 @@
 <template>
   <v-container class="mb-10">
-    <v-btn :disabled="percentage < 98" class="invisible">
+    <v-btn :disabled="percentage < 100" class="invisible">
       <div class="headshot headshot-1 dot" v-bind:class="classObject">
         <v-row justify="space-around">
           <span class="letter">{{title}}</span>

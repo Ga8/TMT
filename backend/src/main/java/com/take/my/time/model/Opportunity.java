@@ -24,7 +24,7 @@ public class Opportunity implements Comparable<Opportunity> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="opportunity_id")
+  @Column(name = "opportunity_id")
   private Long id;
 
   @Column(name = "date")
@@ -61,29 +61,13 @@ public class Opportunity implements Comparable<Opportunity> {
     return state;
   }
 
-//  public Set<User> getUsers() {
-//    if (users == null) {
-//      users = new HashSet<User>();
-//    }
-//    return users;
-//  }
+
 
   public void setState(String state) {
     this.state = state;
 
   }
 
-//  public List<UserOpportunityHour> getUserHour() {
-//    if (userHour == null) {
-//      userHour = new ArrayList<UserOpportunityHour>();
-//    }
-//
-//    return userHour;
-//  }
-
-//  public void setUserHour(List<UserOpportunityHour> userHour) {
-//    this.userHour = userHour;
-//  }
 
   public void setUsers(Set<UserOpportunityHour> users) {
     this.users = users;
@@ -108,8 +92,8 @@ public class Opportunity implements Comparable<Opportunity> {
       if (userDetails.getHour() != null && userDetails.getUser().getName() != null) {
         labellv =
             labellv + userDetails.getUser().getName() + " - " + userDetails.getHour() + " /\n ";
-      }else {
-    	  labellv = labellv + userDetails.getUser().getName();
+      } else {
+        labellv = labellv + userDetails.getUser().getName();
       }
     }
     label = labellv;
@@ -128,13 +112,19 @@ public class Opportunity implements Comparable<Opportunity> {
 
   }
 
-public Set<UserOpportunityHour> getUsers() {
-	if (users==null) {
-		users = new HashSet<UserOpportunityHour>();
-	}
-	return users;
-}
+  public Set<UserOpportunityHour> getUsers() {
+    if (users == null) {
+      users = new HashSet<UserOpportunityHour>();
+    }
+    return users;
+  }
 
-  
+  @Override
+  public String toString() {
+    return "Opportunity [ opportunityDate=" + opportunityDate + ", state=" + state + ", users="
+        + users + ", label=" + label + "]";
+  }
+
+
 
 }
