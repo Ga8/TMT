@@ -18,32 +18,32 @@ public class StateServiceImpl implements StateService {
     for (Opportunity op : meeting.getOpportunities()) {
       // pourcentage de votant pour cette date
       Double ratio = (Double.valueOf(op.getUsers().size()) / voterCount) * 100;
-      op.setState(getOpportunityState(ratio).name());
+      op.setState(getOpportunityState(ratio));
     }
   }
 
 
 
   @Override
-  public OpportunityStateEnum getOpportunityState(Double ratio) {
+  public String getOpportunityState(Double ratio) {
 
-    OpportunityStateEnum state = null;
+    String state = null;
 
     if (ratio == 100) {
 
-      state = OpportunityStateEnum.GREEN;
+      state = OpportunityStateEnum.GREEN.getCouleurCss();
 
     } else if (ratio >= 75) {
 
-      state = OpportunityStateEnum.YELLOW;
+      state = OpportunityStateEnum.YELLOW.getCouleurCss();
 
     } else if (ratio >= 50) {
 
-      state = OpportunityStateEnum.ORANGE;
+      state = OpportunityStateEnum.ORANGE.getCouleurCss();
 
-    } else if (ratio >= 25) {
+    } else if (ratio < 50) {
 
-      state = OpportunityStateEnum.YELLOW;
+      state = OpportunityStateEnum.RED.getCouleurCss();
     }
 
     return state;

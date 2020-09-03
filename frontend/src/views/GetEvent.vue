@@ -85,16 +85,16 @@
                       <h5 class="ma-4 smoothcolor">Percentage of your guest disponibility</h5>
                       <v-divider horizontal class="ma-2" />
                       <div class="legend">
-                        <v-chip class="ma-2" color="green" />
+                        <v-chip class="ma-2" color="#008E58" />
                         <span>over 80%</span>
                         <br />
-                        <v-chip class="ma-2" color="yellow" />
+                        <v-chip class="ma-2" color="#C8EE37" />
                         <span>60%-80%</span>
                         <br />
-                        <v-chip class="ma-2" color="orange" />
+                        <v-chip class="ma-2" color="#F7C940" />
                         <span>40-60%</span>
                         <br />
-                        <v-chip class="ma-2" color="red" />
+                        <v-chip class="ma-2" color="#EE1010" />
                         <span>under 40%</span>
                         <br />
                       </div>
@@ -685,6 +685,6 @@ h3:after {
 }
 .timePicker {
   width: 125px;
-  height: ;
+ 
 }
 </style>

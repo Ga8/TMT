@@ -7,6 +7,6 @@ public interface StateService {
 
   void computeOpportunityState(Meeting meeting);
 
-  OpportunityStateEnum getOpportunityState(Double ratio);
+  String getOpportunityState(Double ratio);
 
 }
