@@ -2,7 +2,7 @@ package com.take.my.time.model;
 
 public enum OpportunityStateEnum {
 
-  RED("#EE1010"), ORANGE("#F7C940"), YELLOW("#C8EE37"), GREEN("#008E58");
+  RED("red"), ORANGE("yellow"), YELLOW("indigo"), GREEN("green");
 	// red DB1702
 	
 	private String couleurCss;

@@ -85,17 +85,17 @@
                       <h5 class="ma-4 smoothcolor">Percentage of your guest disponibility</h5>
                       <v-divider horizontal class="ma-2" />
                       <div class="legend">
-                        <v-chip class="ma-2" color="#008E58" />
-                        <span>over 80%</span>
+                        <v-chip class="ma-2" color="green" />
+                        <span>100%</span>
                         <br />
-                        <v-chip class="ma-2" color="#C8EE37" />
-                        <span>60%-80%</span>
+                        <v-chip class="ma-2" color="indigo" />
+                        <span>>75%</span>
                         <br />
-                        <v-chip class="ma-2" color="#F7C940" />
-                        <span>40-60%</span>
+                        <v-chip class="ma-2" color="yellow" />
+                        <span>>50%</span>
                         <br />
-                        <v-chip class="ma-2" color="#EE1010" />
-                        <span>under 40%</span>
+                        <v-chip class="ma-2" color="red" />
+                        <span>under 50%</span>
                         <br />
                       </div>
                     </v-col>
