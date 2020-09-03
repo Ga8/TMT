@@ -18,7 +18,7 @@
           </h1>
 
           <h5 class="smoothcolor secondtitle">created by</h5>
-          <h2 class="cool">{{author}}</h2>
+          <h2 class="cool author">{{author}}</h2>
         </v-col>
       </v-row>
     </div>
@@ -77,18 +77,33 @@
               <p v-if="!dateIsChosen" class="error">Choose at least one date</p>
             </v-col>
             <v-col cols="12" sm="12" md="3" class="ma-2 border">
+              <v-row justify="center">
               <!-- Button submit -->
               <v-progress-circular
                 :rotate="360"
-                :size="300"
+                :size="150"
                 :width="15"
                 :value="value"
                 color="teal"
-              > <v-btn
+              > mandatory : <br />{{value*2 / 100}}/2
+              </v-progress-circular>
+              <div class="ma-2"> </div>
+              <v-progress-circular
+                :rotate="360"
+                :size="150"
+                :width="15"
+                :value="value"
+                color="#095049"
+              > 
+              options : <br /> {{options}}/6
+              </v-progress-circular>
+
+              </v-row>
+              <v-btn
                 class="ma-10 pulse-button"
                 color="teal"
                 @click="validate"
-              >Submit my disponibility</v-btn></v-progress-circular>
+              >Submit my disponibility</v-btn>
 
               
               <v-divider class="mt-10" horizontal></v-divider>
@@ -118,7 +133,7 @@
               <v-text-field
                 v-model="email"
                 :counter="50"
-                :rules="[validateEmail]"
+                
                 label="Email"
                 required
                 outlined
@@ -231,7 +246,6 @@ export default {
   },
   data: () => ({
     author: "",
-    value: 0,
     rows: 1,
     email: "",
     full: true,
@@ -258,12 +272,13 @@ export default {
     dateValid: false,
     numerateur: 0,
     denominateur: 2,
+    options: 0,
 
   }),
   computed: {
-    value : function () {
-
-    },
+   value() {
+    return 100*this.numerateur / this.denominateur;
+   },
     attributes() {
       if (this.data) {
         return [
@@ -318,6 +333,7 @@ export default {
     createData: vm => ({
       guid: vm.guid,
       name: vm.name,
+      email: vm.email,
       opportunities: vm.selectedDays
     }),
     async update(meeting) {
@@ -409,7 +425,6 @@ export default {
           this.emailValid = true;
         }
       
-      this.updateCount();
       return result;
     },
     required(value) {
@@ -455,9 +470,10 @@ export default {
   min-width: 380px;
 }
 .smoothcolor {
-  color: #aab41b;
+  color: #ffffff;
   font-family: "Merienda one";
   font-size: 1.4em;
+  opacity : 60%;
 }
 .green {
   background-color: #4fc08d;
@@ -611,6 +627,11 @@ h3:after {
 }
 
 .secondtitle {
-  margin-top: -100px;
+  margin-top: -150px;
+  margin-left :210px;
+}
+.author {
+  margin-left: 300px;
+  margin-bottom: 50px;
 }
 </style>
