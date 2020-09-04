@@ -17,6 +17,24 @@
          If guests give me valid email they will be inform of the final choice. 
       </v-expansion-panel-content>
     </v-expansion-panel>
+     <v-expansion-panel>
+      <v-expansion-panel-header class="titre pair">Is it free? </v-expansion-panel-header>
+      <v-expansion-panel-content class="content" >
+        Yes it's totally free for you but not for me. 
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+     <v-expansion-panel>
+      <v-expansion-panel-header class="titre impair">How create my event? </v-expansion-panel-header>
+      <v-expansion-panel-content class="content" >
+        This site is a simple and quick way to create an appointment when you don't know guests disponibilities. <br /><br />
+        For exemple you need to organise an appointment and you want to know where your guest can be there.   <br />
+        So,you create an event, the event creation will be associated with a code for your event.  <br /><br />
+        Now, you just send the code event to your guest. They give their diponibilities.  <br />
+        Then you can see at a glance when your guests are the most available for your appointment.   <br /><br />
+         The final word is always for you, you will choose what ever they vote but you can do it with full knowledge of the facts.<br />
+         If guests give me valid email they will be inform of the final choice. 
+      </v-expansion-panel-content>
+    </v-expansion-panel>
     <v-expansion-panel
     >
       <v-expansion-panel-header class="titre pair">Someone give me a code what i must do? </v-expansion-panel-header>
