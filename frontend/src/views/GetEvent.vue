@@ -52,7 +52,7 @@
                 Choose yours disponibilities (max : 5)
                 <v-tooltip right>
                   <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="red" v-bind="attrs" v-on="on">mdi-alert-decagram</v-icon>
+                    <v-icon color="red" v-bind="attrs" v-on="on">mdi-information</v-icon>
                   </template>
                   <span>Required</span>
                 </v-tooltip>
@@ -63,7 +63,7 @@
 
               <vc-date-picker
                 mode="multiple"
-                
+                is-expanded
                 v-model="dates"
                 :attributes="attributes"
                 is-inline
@@ -125,7 +125,7 @@
                                 color="blue"
                                 v-bind="attrs"
                                 v-on="on"
-                              >mdi-alpha-o-circle</v-icon>
+                              >mdi-information</v-icon>
                             </template>
                             <span>Optional</span>
                           </v-tooltip>
@@ -180,7 +180,7 @@
                 Enter your name
                 <v-tooltip right>
                   <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="red" v-bind="attrs" class="mb-2" v-on="on">mdi-alert-decagram</v-icon>
+                    <v-icon color="red" v-bind="attrs" class="mb-2" v-on="on">mdi-information</v-icon>
                   </template>
                   <span>Required</span>
                 </v-tooltip>
@@ -213,7 +213,7 @@
                 <span>
                   <v-tooltip right>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-icon class="mb-4" color="blue" v-bind="attrs" v-on="on">mdi-alpha-o-circle</v-icon>
+                      <v-icon class="mb-4" color="blue" v-bind="attrs" v-on="on">mdi-information</v-icon>
                     </template>
                     <span>Optional</span>
                   </v-tooltip>
