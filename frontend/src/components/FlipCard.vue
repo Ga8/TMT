@@ -41,7 +41,7 @@
                     </div>
                     <div class="ma-4">
                       <v-icon
-                        class="pulse-button"
+                        class="pulse-button bottomposition"
                         v-on:click="flipped=true"
                         x-large
                         color="white"
@@ -59,7 +59,7 @@
             <v-row align="end" class="fill-height">
               <div class="parentback">
                 <v-col align-self="center" class="pa-0" cols="12">
-                  <div>
+                  <div class="marginbottom">
                     <p class="ma-4">You get a bug?</p>
                     <p class="ma-4">You want an improvement for this web application?</p>
                     <p class="ma-4">You are an awesome enterprise based in New Zealand, you like my work and want employ me?</p>
@@ -77,16 +77,16 @@
                         </v-avatar>Linkedin
                       </v-chip>
                     <p>              
-                      <v-chip class="ma-2" color="black" text-color="white">
+                      <v-chip class="ma-4" color="black" text-color="white">
                         <v-avatar left class="black">
                           <v-icon>mdi-email</v-icon>
                         </v-avatar>Ga8.code@live.fr
                       </v-chip>
                     </p>
                   </div>
-                  <div class="ma-4 returnposition">
+                  <div class="ma-4">
                     <v-icon
-                      class="pulse-button"
+                      class="pulse-button bottomposition"
                       v-on:click="flipped=false"
                       x-large
                       color="white"
@@ -250,5 +250,18 @@ i.backFlipBtn {
   to {
     box-shadow: 0 0 0 20px rgba(232, 76, 61, 0);
   }
+}
+
+.bottomposition{
+  position: fixed;
+  bottom: 25px;
+  margin: auto;
+  left:45%;
+
+
+}
+
+.marginbottom {
+  margin-bottom: 100px;
 }
 </style>
