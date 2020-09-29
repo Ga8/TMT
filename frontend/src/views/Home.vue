@@ -93,7 +93,7 @@
             Firstly, this web appplication is made for me. I wanted to find a solution to meet my friends but, you know, no one get the same disponibilities.
             <br />So i create that web application to see quickly when my friends are available for a party or at least when 80% of my guests can be there.
             <br />
-            <br />Moreover I really enjoy building web application with new technology and i was seeking for a project to use Vue.js.
+            <br />Moreover I really enjoy building web application with new technology and i was looking for a project to use Vue.js.
             in this project I step up on many parts of softwre building like UX design, UI, Css transition, web hosting, database administration ...
             <br />And i can show to my company or future company my skill with vue.js and Springboot.
             <br />So i build it in Vue.js using most vue tool I can. Taking time to do the best practice and understand the most deeply as i can this framework.
